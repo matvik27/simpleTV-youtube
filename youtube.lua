@@ -1,16 +1,16 @@
 -- видеоскрипт для сайта https://www.youtube.com (1/8/20)
 --[[
-   Copyright © 2017-2020 Nexterr
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-       http://www.apache.org/licenses/LICENSE-2.0
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-   ]]
+	Copyright © 2017-2020 Nexterr
+	Licensed under the Apache License, Version 2.0 (the "License");
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+		http://www.apache.org/licenses/LICENSE-2.0
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+]]
 -- https://github.com/Nexterr/simpleTV.youtube
 -- использовались скрипты http://iptv.gen12.net/bugtracker/view.php?id=986
 -- UTF-8 w/o BOM
@@ -3080,7 +3080,7 @@ https://github.com/grafi-tt/lunaJson
 	if isChPlst then
 			if (m_simpleTV.Control.Reason == 'Stopped' or m_simpleTV.Control.Reason == 'EndReached')
 				and
-				(inAdr:match('isChPlst=true') or (inAdr:match('&restart') and not inAdr:match('browse_ajax')))
+				(inAdr:match('isChPlst=true') or (inAdr:match('&restart') and not inAdr:match('browse_ajax') and not inAdr:match('&sort=.-&restart')))
 			then
 				m_simpleTV.Control.ExecuteAction(63)
 			 return
