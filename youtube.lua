@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (31/7/20)
+-- видеоскрипт для сайта https://www.youtube.com (1/8/20)
 --[[
    Copyright © 2017-2020 Nexterr
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -3080,6 +3080,7 @@ https://github.com/grafi-tt/lunaJson
 	if isChPlst then
 			if (m_simpleTV.Control.Reason == 'Stopped'
 				or m_simpleTV.Control.Reason == 'EndReached')
+				and inAdr:match('isChPlst=true')
 			then
 				m_simpleTV.Control.ExecuteAction(63)
 			 return
