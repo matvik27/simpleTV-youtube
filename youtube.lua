@@ -3994,8 +3994,6 @@ https://github.com/grafi-tt/lunaJson
 				plstPicId = tab[1].Address:match('watch%?v=([^&]+)')
 				m_simpleTV.User.YT.AddToBaseVideoIdPlst = plstPicId
 			end
-			if m_simpleTV.Control.MainMode == 0 then
-			end
 			if not (#tab == 1 and m_simpleTV.User.YT.duration and m_simpleTV.User.YT.duration > 600) then
 				retAdr = retAdr .. '$OPT:POSITIONTOCONTINUE=0'
 			end
