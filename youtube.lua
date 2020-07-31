@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (28/7/20)
+-- видеоскрипт для сайта https://www.youtube.com (31/7/20)
 --[[
    Copyright © 2017-2020 Nexterr
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -2643,7 +2643,7 @@ https://github.com/grafi-tt/lunaJson
 			if m_simpleTV.Control.Reason == 'Stopped'
 				or m_simpleTV.Control.Reason == 'EndReached'
 			then
-				m_simpleTV.Control.ExecuteAction(108)
+				m_simpleTV.Control.ExecuteAction(63)
 			 return
 			end
 		local tab = m_simpleTV.User.YT.ChPlstTab
@@ -3080,12 +3080,11 @@ https://github.com/grafi-tt/lunaJson
 	if isChPlst then
 			if (m_simpleTV.Control.Reason == 'Stopped'
 				or m_simpleTV.Control.Reason == 'EndReached')
-				and inAdr:match('&video')
 			then
-				m_simpleTV.Control.ExecuteAction(108)
+				m_simpleTV.Control.ExecuteAction(63)
 			 return
 			end
-		local url = inAdr:gsub('&video', '')
+		local url = inAdr
 		if url:match('/live$') or url:match('/embed/live_stream%?') then
 			local rc, answer = m_simpleTV.Http.Request(session, {url = url})
 				if rc ~= 200 then
@@ -4157,7 +4156,7 @@ https://github.com/grafi-tt/lunaJson
 			local ButtonScript1 = [[
 						m_simpleTV.Control.ExecuteAction(37)
 						m_simpleTV.Control.ChangeAddress = 'No'
-						m_simpleTV.Control.CurrentAddress = 'https://www.youtube.com/channel/' .. m_simpleTV.User.YT.chId .. '&restart&video'
+						m_simpleTV.Control.CurrentAddress = 'https://www.youtube.com/channel/' .. m_simpleTV.User.YT.chId .. '&restart'
 						dofile(m_simpleTV.MainScriptDir .. 'user\\video\\youtube.lua')
 					]]
 			if m_simpleTV.User.paramScriptForSkin_buttonPlst then
