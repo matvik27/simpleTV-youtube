@@ -1,0 +1,164 @@
+not get mix-plst from api
+https://www.youtube.com/embed?listType=playlist&list=RD91Niv2q4gvc
+rss feed channel
+https://www.youtube.com/feeds/videos.xml?channel_id=UCba3hpU7EFBSk817y9qZkiA
+rss feed user
+https://www.youtube.com/feeds/videos.xml?user=periodicvideos
+id no Correct
+https://www.youtube.com/embed/6QFwo57WKwh
+chapters(timestamps) from description
+https://youtu.be/-cHCcUrHb94
+chapters from description
+https://www.youtube.com/watch?v=EwHIH3jIwuM
+видео в плейлисте с указаным временем
+https://youtu.be/C-u5WLJ9Yk4?list=PLpdRVFVH_vIMvkMVdJScNK3S2SeOv7k1d&t=111
+Подписки, cookies нужны
+https://www.youtube.com/feed/channels
+открывает, cookies не нужны
+https://www.youtube.com/watch?v=zbT53Q_olkU$OPT:http-referrer=https://cinema.mosfilm.ru
+ролик заблокирован для БФ (показывает)
+https://www.youtube.com/watch?v=0e9JgyzCIBc
+копировать и вставить
+https://www.youtube.com/c/ТелеканалНАШ
+плейлисты канала - Vevo Presents с ограниченым доступом
+https://www.youtube.com/user/xoxxxoooxo
+предосмотр (открывает - cookies нужны)
+https://www.youtube.com/watch?v=jwhq08k_uVo
+Пользователи YouTube отметили этот ролик как недопустимый
+https://www.youtube.com/watch?v=6SJNVb0GnPI
+длинный 100 час.
+https://www.youtube.com/watch?v=OMRk_F6Avw8
+короткий URL сервиса y2u.be
+http://y2u.be/hY1tULEr4-4
+ролик с t удален из плейлиста
+https://youtu.be/NzsbkX2uzlU?list=PLcLrKCb6x5m2J2v9KoVw9JiWt2laXd0AR&t=3371
+Видео удалено за нарушение Условий использования YouTube
+https://youtu.be/SzjpwMfyDUs?list=PLcLrKCb6x5m2J2v9KoVw9JiWt2laXd0AR&t=2250
++ в ссылке
+https://www.youtube.com/watch_videos?more_url=&type=0&title=%D0%A2%D1%80%D0%B5%D0%BF+%28%D0%BC%D1%83%D0%B7%D1%8B%D0%BA%D0%B0%29+%E2%80%93+%D1%82%D0%B5%D0%BC%D0%B0&video_ids=UF3Ueqww7M8%2CQYh6mYIJG2Y%2CLH4Y1ZUUx2g%2Cb8m9zhNAgKs%2C4LfJnj66HVQ%2Ct7lM7Bn16Zg
+поиск видео - простоквашино
+- простоквашино
+поиск плейлистов - taylor swift
+-- taylor swift
+поиск каналов  - becky g
+---becky g
+поиск прямых трансляций - вселенная
+-+вселенная
+большой плейлист > 100k
+https://www.youtube.com/watch?v=v0Zwe9Q40iw&list=UUupvZG-5ko_eiXAupbDfxWw
+subtitle languageCode: es-419
+https://www.youtube.com/watch?v=VqEbCxg2bNI
+для сайта invidio.us
+https://www.invidio.us/watch?v=udUTaTt0Iac
+для сайта hooktube.com
+https://hooktube.com/watch?v=KMvwfLQhA_Y
+test patten 3
+https://www.youtube.com/watch\?v\  =4D3X6Xl5c_Y\&list\=PLIivdWyY5sqKh1gDR0WpP9iIOY00IE0xL\&index\=2\&t\=0s
+плейлист Рекомендуемые вам ( watch_videos и title)
+https://www.youtube.com/watch_videos?title=%D0%9F%D0%BE%D1%81%D0%BB%D0%B5%D0%B4%D0%BD%D0%B8%D0%B5+%D0%BE%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5+%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE&more_url=&video_ids=Du5hekU95mY%2CHTZxa6n9TDM%2C8mW80GC1KXw%2CH0sFSvRJor8%2CjHsk0azFlP8%2CHJhlOPIaQiI%2C3ZeetzoBR_0%2C1k9bbfvgqgY%2CzlNlkwB27lU%2CJBDhNIDmLWQ%2Cqe4BEMyA1TA%2C8cnV3m7i6HU%2ChPOYfYP4ISY%2Cc65arnSHT6s%2CsPFocUNxykA&type=0
+мультикамеры live
+https://www.youtube.com/watch?v=RGFrzLIT3EQ
+test patten 2
+ ['http://music.youtu.be\embed\videoseries??list_id=PLx0sYbCqOb8TBPRdmBHs5Iftvv9TPboYG/&amp;nohtml5=5&&disable_polymer%3D1%26t%3D0s',%20'-v'%5D)
+высота - 268, качество - 360
+https://www.youtube.com/watch?v=IPXIgEAGe4U
+вертикальное видео
+https://www.youtube.com/watch?v=KRntP-q_R9s
+плейлист - Посмотреть позже -  cookies нужны. только первые 200 роликов
+https://www.youtube.com/playlist?list=WL
+плейлист - Посмотреть позже - cookie нужны
+https://www.youtube.com/watch?v=c90fkhgpq04&list=WL&t=0s&index=3
+встроеная прямая трансляция канала
+https://www.youtube.com/embed/live_stream?channel=UCba3hpU7EFBSk817y9qZkiA
+альбомы
+https://www.youtube.com/user/takeTHAT/playlists?sort=dd&shelf_id=485&view=50
+неприемлемый - открывает
+https://youtu.be/1B__8N5d_LA
+плейлисты/видео юзера
+https://www.youtube.com/user/ScorpionsOfficial/
+test patten 1
+ ['http://music.youtu.be/embed/videoseries??list_id=PLx0sYbCqOb8TBPRdmBHs5Iftvv9TPboYG/&nohtml5=5&&disable_polymer=1&t=0s', '-v']
+встраиваемое видео (короткий 17 сек)
+http://www.youtube.com/watch/iwGFalTRHDA
+с attribution_link
+http://www.youtube.com/attribution_link?a=fF1CWYwxCQ4&u=/watch?v=qYr8opTPSaQ&feature=em-uploademail
+плейлист index с [Видео с ограниченным доступом]
+https://www.youtube.com/watch?v=rV67UrbzzNM&index=16&list=PL06BE01FD52EF2CC0
+у dash проблемы в конце со звуком
+https://www.youtube.com/watch?v=AqLJ4FivnWk
+мультикамеры
+https://www.youtube.com/watch?v=K1c4iTBYUN8
+gaming youtube ссылка
+https://gaming.youtube.com/watch?v=bIZPha1tQXU
+встроеный плейлист mix
+https://www.youtube.com/embed?listType=playlist&list=RDet281UHNoOU
+альбом
+https://www.youtube.com/playlist?list=OLAK5uy_nZApi8ntKCxB3bpKHZ9MCjoeypunwc24o
+видео с 726 сек.
+https://www.youtube.com/watch?time_continue=726&v=YZYvqpZH2yE
+встроеный плейлист
+https://www.youtube.com/embed/videoseries?list=PLx0sYbCqOb8TBPRdmBHs5Iftvv9TPboYG
+50 fps.
+https://www.youtube.com/watch?v=9Lo_r_lGM6Q
+прямой эфир - HLS
+https://www.youtube.com/watch?v=3Q11d6I21PE
+требует вход - заставка (открывает - cookies нужны)
+https://www.youtube.com/watch?v=kFW8kJ9Y1tM
+геоблок - заставка
+https://youtube.com/watch?v=sJL6WA-aGkQ
+видео недоступно - заглушка
+https://www.youtube.com/watch?v=arlev2tjDtk
+платно - предосмотр
+https://www.youtube.com/watch?v=COWtsRUxFJo
+требует вход - открывает
+https://www.youtube.com/watch?v=6LZM3_wp2ps
+music youtube ссылка
+https://music.youtube.com/watch?v=6K5HVQn5pG4&list=RDAMVMQ5RS0C9Iy4Q
+music youtube ссылка
+https://music.youtube.com/playlist?list=RDCLAK5uy_k4azwnnMzoGr48tIU0Wuh5FefpUC2Cs1M
+tv youtube ссылка
+https://www.youtube.com/tv#/watch?v=MtmYtxV2IXM
+tv youtube ссылка
+https://www.youtube.com/tv#/watch/video/control?v=fPO76Jlnz6c&list=RDymNFyxvIdaM&resume
+мобильная ссылка
+https://m.youtube.com/watch?v=5VkG_QC7jMU
+перевод субтитрыов c en на рус
+https://www.youtube.com/watch?v=aeiWEGm31nY
+60 fps. 8К
+https://www.youtube.com/watch?v=1La4QzGeaaQ
+встраиваемое видео
+https://www.youtube.com/embed/owsfdh4gxyc
+встраиваемое видео
+https://youtube.com/v/ndwYRoOlcMQ?hl=en
+встроеный плейлист
+https://www.youtube.com/embed/playlist?list=PLcLrKCb6x5m2J2v9KoVw9JiWt2laXd0AR
+список роликов в ссылке
+https://www.youtube.com/watch_videos?video_ids=5VkG_QC7jMU,8tJPKSz6Gaw,XkU23m6yX04
+субтитры рус. плейлист - старт с видео id = 8tJPKSz6Gaw
+https://www.youtube.com/watch?v=8tJPKSz6Gaw&list=PL4dWJMOQ_a1TgayrpaB-SEVJhHC58U1wU&index=2
+видео юзера
+https://www.youtube.com/c/12minuteathlete/videos
+плейлисты/видео юзера
+https://www.youtube.com/SlivkiChanel
+плейлисты юзера
+https://www.youtube.com/user/kvn/playlists?sort=dd&shelf_id=0&view=1
+плейлисты/видео юзера
+https://www.youtube.com/user/Millisenta1000
+прямая трансляция канала
+https://www.youtube.com/channel/UCba3hpU7EFBSk817y9qZkiA/live
+прямая трансляция юзера
+https://www.youtube.com/lachesisq/live
+плейлисты/видео канала
+https://www.youtube.com/channel/UCORIeT1hk6tYBuntEXsguLg
+плейлисты канала - сначала старые
+https://www.youtube.com/channel/UCtetJiD_llxdGL4Uh5-Oe2w/playlists?flow=grid&sort=da&view=1
+плейлисты канала - сначала новые
+https://www.youtube.com/channel/UCtetJiD_llxdGL4Uh5-Oe2w/playlists?sort=dd&view=1&flow=list
+плейлисты канала - по дате обновления
+https://www.youtube.com/channel/UCtetJiD_llxdGL4Uh5-Oe2w/playlists?view=1&flow=list&sort=lad
+видео канала - самые популярные
+https://www.youtube.com/channel/UCtetJiD_llxdGL4Uh5-Oe2w/videos?view=0&flow=list&sort=p
+видео канала - сначала новые
+https://www.youtube.com/channel/UCtetJiD_llxdGL4Uh5-Oe2w/videos?flow=list&view=0&sort=dd
+видео канала - сначала старые
+https://www.youtube.com/channel/UCtetJiD_llxdGL4Uh5-Oe2w/videos?sort=da&flow=grid&view=0
