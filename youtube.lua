@@ -3078,9 +3078,9 @@ https://github.com/grafi-tt/lunaJson
 		inAdr = inAdr .. '&index=1'
 	end
 	if isChPlst then
-			if (m_simpleTV.Control.Reason == 'Stopped'
-				or m_simpleTV.Control.Reason == 'EndReached')
-				and inAdr:match('isChPlst=true')
+			if (m_simpleTV.Control.Reason == 'Stopped' or m_simpleTV.Control.Reason == 'EndReached')
+				and
+				(inAdr:match('isChPlst=true') or (inAdr:match('&restart') and not inAdr:match('browse_ajax')))
 			then
 				m_simpleTV.Control.ExecuteAction(63)
 			 return
