@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (1/8/20)
+-- видеоскрипт для сайта https://www.youtube.com (5/8/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -2578,10 +2578,7 @@ https://github.com/grafi-tt/lunaJson
 		end
 		local index = m_simpleTV.User.YT.QltyIndex
 		local title = m_simpleTV.User.YT.Lng.qlty
-		if not m_simpleTV.User.paramScriptForSkin_buttonOptions then
-			title = '⚙ ' .. title
-		end
-		local ret, id = m_simpleTV.OSD.ShowSelect_UTF8(title, index - 1, t, 5000, 1 + 4)
+		local ret, id = m_simpleTV.OSD.ShowSelect_UTF8('⚙ ' .. title, index - 1, t, 5000, 1 + 4)
 		if not id then
 			m_simpleTV.Control.ExecuteAction(37)
 		end
@@ -3320,7 +3317,16 @@ https://github.com/grafi-tt/lunaJson
 				buttonNext = false
 			end
 				if i == 1 then
-					StopOnErr(4.1, 'cant parse channal page')
+					m_simpleTV.Http.Close(session)
+					m_simpleTV.User.YT.ChPlst.countErr = m_simpleTV.User.YT.ChPlst.countErr + 1
+						if m_simpleTV.User.YT.ChPlst.countErr == 3 then
+							m_simpleTV.User.YT.ChPlst.countErr = nil
+							StopOnErr(4.1, 'cant parse channal page')
+						 return
+						end
+					m_simpleTV.Control.ChangeAddress = 'No'
+					m_simpleTV.Control.CurrentAddress = 'https://www.youtube.com/channel/' .. chId .. '&restart'
+					dofile(m_simpleTV.MainScriptDir .. 'user\\video\\youtube.lua')
 				 return
 				end
 		m_simpleTV.User.YT.ChPlstTab = tab
@@ -3823,11 +3829,7 @@ https://github.com/grafi-tt/lunaJson
 			if m_simpleTV.User.YT.isChPlst
 				and not m_simpleTV.User.YT.is_channel_banner
 			then
-				if plstTotalResults == 1 then
-					SetBackground()
-				else
-					SetBackground((m_simpleTV.User.YT.channel_banner or m_simpleTV.User.YT.logoDisk), 3)
-				end
+				SetBackground((m_simpleTV.User.YT.channel_banner or m_simpleTV.User.YT.logoDisk), 3)
 			end
 			m_simpleTV.User.YT.is_channel_banner = nil
 			local t0 = {}
@@ -3958,8 +3960,9 @@ https://github.com/grafi-tt/lunaJson
 			tab.ExtParams.LuaOnCancelFunName = 'OnMultiAddressCancel_YT'
 			tab.ExtParams.LuaOnOkFunName = 'OnMultiAddressOk_YT'
 			tab.ExtParams.LuaOnTimeoutFunName = 'OnMultiAddressCancel_YT'
-			if #tab > 1
-				and plstIndex == 1
+			if (#tab > 1
+				and plstIndex == 1)
+				or m_simpleTV.User.YT.isChPlst
 			then
 				m_simpleTV.User.YT.DelayedAddress = tab[1].Address
 				m_simpleTV.OSD.ShowSelect_UTF8(header, 0, tab, 10000, 2)
