@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (5/8/20)
+-- видеоскрипт для сайта https://www.youtube.com (6/8/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -972,6 +972,7 @@ https://github.com/grafi-tt/lunaJson
 		s = s:gsub('\\u0026', '&')
 		s = s:gsub('\\u2060', '')
 		s = s:gsub('\\n', ' ')
+		s = s:gsub('\\\\', '\\')
 		s = unescape_html(s)
 	 return s
 	end
