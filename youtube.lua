@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (6/8/20)
+-- видеоскрипт для сайта https://www.youtube.com (8/8/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -1878,6 +1878,12 @@ https://github.com/grafi-tt/lunaJson
 			title = title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.camera
 		end
 		local t, i = {}, 1
+		if tab.storyboards
+			and tab.storyboards.playerStoryboardSpecRenderer
+			and tab.storyboards.playerStoryboardSpecRenderer.spec
+		then
+			Thumbs(tab.storyboards.playerStoryboardSpecRenderer.spec)
+		end
 			if tab.streamingData and tab.streamingData.hlsManifestUrl
 				and (tab.videoDetails.isLiveContent == true or tab.videoDetails.isLive == true)
 			then
@@ -2342,12 +2348,6 @@ https://github.com/grafi-tt/lunaJson
 			if Chapters() then
 				title = title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.chapter
 			end
-		end
-		if tab.storyboards
-			and tab.storyboards.playerStoryboardSpecRenderer
-			and tab.storyboards.playerStoryboardSpecRenderer.spec
-		then
-			Thumbs(tab.storyboards.playerStoryboardSpecRenderer.spec)
 		end
 	 return t, title
 	end
