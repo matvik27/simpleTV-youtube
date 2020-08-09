@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (8/8/20)
+-- видеоскрипт для сайта https://www.youtube.com (9/8/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -2335,7 +2335,6 @@ https://github.com/grafi-tt/lunaJson
 		end
 		if m_simpleTV.User.YT.isAuth
 			and m_simpleTV.User.YT.isLive == false
-			and m_simpleTV.User.YT.isLiveContent == false
 			and m_simpleTV.User.YT.isTrailer == false
 			and tab.playbackTracking
 			and tab.playbackTracking.videostatsPlaybackUrl
