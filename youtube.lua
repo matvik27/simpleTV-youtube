@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (9/8/20)
+-- видеоскрипт для сайта https://www.youtube.com (19/8/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -162,7 +162,7 @@ local debugInFile = false
 	end
 	m_simpleTV.Control.ChangeAddress = 'Yes'
 	m_simpleTV.Control.CurrentAddress = 'error'
-	local userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36'
+	local userAgent = 'Mozilla/5.0 (Windows NT 10.0; rv:79.0) Gecko/20100101 Firefox/79.0'
 	local userAgent_2 = 'Mozilla/5.0 (SMART-TV; Linux; Tizen 4.0.0.2) AppleWebkit/605.1.15 (KHTML, like Gecko) SamsungBrowser/9.2 TV Safari/605.1.15'
 	local session = m_simpleTV.Http.New(userAgent)
 		if not session then return end
@@ -4208,7 +4208,7 @@ https://github.com/grafi-tt/lunaJson
 			local adr = m_simpleTV.Common.fromPercentEncoding(retAdr)
 			local string_rep = string.rep('–', 70) .. '\n'
 			debugInFile = string_rep
-						.. '💢 url: https://www.youtube.com/watch?v=' .. m_simpleTV.User.YT.vId .. '\n'
+						.. 'url: https://www.youtube.com/watch?v=' .. m_simpleTV.User.YT.vId .. '\n'
 						.. string_rep
 						.. 'video itag: ' .. tostring(t[index].itag)
 						.. ' | audio itag: ' .. tostring(t[1].audioItag) .. '\n'
@@ -4221,15 +4221,15 @@ https://github.com/grafi-tt/lunaJson
 						.. ' | request: ' .. debug_0 .. ' s.'
 						.. ' | calc: ' .. calc .. ' s.\n'
 						.. string_rep
-						.. '💢 title: ' .. title:gsub('%c', ' ') .. '\n'
+						.. 'title: ' .. title:gsub('%c', ' ') .. '\n'
 						.. string_rep
-						.. '💢 description:\n\n'
+						.. 'description:\n\n'
 						.. m_simpleTV.User.YT.desc .. '\n'
 						.. string_rep
-						.. '💢 cookies:\n\n'
+						.. 'cookies:\n\n'
 						.. m_simpleTV.User.YT.cookies:gsub('^[;]*(.-)[;]$', '%1'):gsub(';+', '\n') .. '\n'
 						.. string_rep
-						.. '💢 address:\n\n'
+						.. 'address:\n\n'
 						.. adr:gsub('%$', '\n\n$'):gsub('slave=', 'slave=\n\n'):gsub('%#', '\n\n#\n\n') .. '\n'
 						.. string_rep
 			debug_in_file(debugInFile, m_simpleTV.Common.GetMainPath(2) .. 'YouTube_log.txt', true)
