@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (19/8/20)
+-- видеоскрипт для сайта https://www.youtube.com (22/8/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -996,6 +996,7 @@ https://github.com/grafi-tt/lunaJson
 			desc = desc:gsub('"+', '"')
 			desc = desc:gsub('(<a href=".-)%)"', '%1"')
 			desc = desc:gsub('%)</a>', '</a>%)')
+			desc = desc:gsub('decoration:none">(https?://[%a%.]*youtu[%.combe].-)</a>', 'decoration:none">%1</a> <a href="simpleTVLua:m_simpleTV.Control.PlayAddress(\'%1\')" style="text-decoration:none">▶️</a>')
 				for t0, t in desc:gmatch('(.)#(%S+)') do
 					t = t:gsub('%p*$', '')
 					if not t:match('^%d%d?$') and (t0 == ' ' or t0 == '\n') then
