@@ -20,11 +20,11 @@
 local debugInFile = false
 		if m_simpleTV.Control.ChangeAddress ~= 'No' then return end
 		if m_simpleTV.Control.ChangeAddress ~= 'No' then return end
-		if not m_simpleTV.Control.CurrentAddress	:match('^[%p%a%s]*https?://[%a%.]*youtu[%.combe]')
-			and not m_simpleTV.Control.CurrentAddress	:match('^https?://[w%.]*hooktube%.com')
-			and not m_simpleTV.Control.CurrentAddress	:match('^https?://[%a%.]*invidio[%a]*%.')
-			and not m_simpleTV.Control.CurrentAddress	:match('^[%p%a%s]*https?://y2u%.be')
-			and not m_simpleTV.Control.CurrentAddress	:match('^%s*%-')
+		if not m_simpleTV.Control.CurrentAddress:match('^[%p%a%s]*https?://[%a%.]*youtu[%.combe]')
+			and not m_simpleTV.Control.CurrentAddress:match('^https?://[w%.]*hooktube%.com')
+			and not m_simpleTV.Control.CurrentAddress:match('^https?://[%a%.]*invidio[%a]*%.')
+			and not m_simpleTV.Control.CurrentAddress:match('^[%p%a%s]*https?://y2u%.be')
+			and not m_simpleTV.Control.CurrentAddress:match('^%s*%-')
 		then
 		 return
 		end
