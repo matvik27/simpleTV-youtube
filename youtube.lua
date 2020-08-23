@@ -1575,7 +1575,7 @@ https://github.com/grafi-tt/lunaJson
 					i = i + 1
 				end
 		end
-		m_simpleTV.User.YT.sts = answer:match('%)%){var %a=(%d%d%d%d%d);')
+		m_simpleTV.User.YT.sts = answer:match('this%.signatureTimestamp[=:](%d+)') or answer:match('"web_player_sts"%)%?(%d+)')
 		m_simpleTV.User.YT.signScr = signScr
 	end
 	local function DeCipherSign(adr)
