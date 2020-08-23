@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (23/8/20)
+-- видеоскрипт для сайта https://www.youtube.com (24/8/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,17 +19,16 @@
 -- показать на OSD плейлист / выбор качества: Ctrl+M
 local debugInFile = false
 		if m_simpleTV.Control.ChangeAddress ~= 'No' then return end
-	local inAdr = m_simpleTV.Control.CurrentAddress
-		if not inAdr then return end
 		if m_simpleTV.Control.ChangeAddress ~= 'No' then return end
-		if not inAdr:match('^[%p%a%s]*https?://[%a%.]*youtu[%.combe]')
-			and not inAdr:match('^https?://[w%.]*hooktube%.com')
-			and not inAdr:match('^https?://[%a%.]*invidio[%a]*%.')
-			and not inAdr:match('^[%p%a%s]*https?://y2u%.be')
-			and not inAdr:match('^%s*%-')
+		if not m_simpleTV.Control.CurrentAddress	:match('^[%p%a%s]*https?://[%a%.]*youtu[%.combe]')
+			and not m_simpleTV.Control.CurrentAddress	:match('^https?://[w%.]*hooktube%.com')
+			and not m_simpleTV.Control.CurrentAddress	:match('^https?://[%a%.]*invidio[%a]*%.')
+			and not m_simpleTV.Control.CurrentAddress	:match('^[%p%a%s]*https?://y2u%.be')
+			and not m_simpleTV.Control.CurrentAddress	:match('^%s*%-')
 		then
 		 return
 		end
+	local inAdr = m_simpleTV.Control.CurrentAddress
 	if debugInFile then
 		debugInFile = os.clock()
 	end
@@ -45,8 +44,7 @@ local debugInFile = false
 			or inAdr:match('browse_ajax')
 			or inAdr:match('&isLogo=')
 			or inAdr:match('&restart')
-			or inAdr:match('&mix=')
-			or inAdr:match('&count='))
+			or inAdr:match('&mix='))
 	then
 		if not m_simpleTV.Common.isUTF8(inAdr) then
 			inAdr = m_simpleTV.Common.multiByteToUTF8(inAdr)
@@ -59,6 +57,8 @@ local debugInFile = false
 		inAdr = inAdr:gsub('\\', '/')
 		inAdr = inAdr:gsub('$OPT:.-$', '')
 		inAdr = inAdr:gsub('disable_polymer=%w+', '')
+		inAdr = inAdr:gsub('%?action=%w+', '')
+		inAdr = inAdr:gsub('%?sub_confirmation=%w+', '')
 		inAdr = inAdr:gsub('flow=list', '')
 		inAdr = inAdr:gsub('no_autoplay=%w+', '')
 		inAdr = inAdr:gsub('start_radio=%d+', '')
@@ -997,6 +997,7 @@ https://github.com/grafi-tt/lunaJson
 			desc = desc:gsub('(<a href=".-)%)"', '%1"')
 			desc = desc:gsub('%)</a>', '</a>%)')
 			desc = desc:gsub('none">(https?://[%a%.]*youtu[%.combe].-)</a>', 'none">%1</a> <a href="simpleTVLua:m_simpleTV.Control.PlayAddress(\'%1\')"><img src="https://i.imgur.com/AJDU9BW.png" height="32" valign="top"></a>')
+			desc = desc:gsub('none">(https?://[%w%.]*twitch%.tv.-)</a>', 'none">%1</a> <a href="simpleTVLua:m_simpleTV.Control.PlayAddress(\'%1\')"><img src="https://i.imgur.com/AJDU9BW.png" height="32" valign="top"></a>')
 				for t0, t in desc:gmatch('(.)#(%S+)') do
 					t = t:gsub('%p*$', '')
 					if not t:match('^%d%d?$') and (t0 == ' ' or t0 == '\n') then
