@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (24/8/20)
+-- видеоскрипт для сайта https://www.youtube.com (1/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
 -- поиск из окна "Открыть URL" (Ctrl+N), префиксы: - (видео), -- (плейлисты), --- (каналы), -+ (прямые трансляции)
 -- авторизаця: файл формата "Netscape HTTP Cookie File" - cookies.txt поместить в папку 'work'
 -- показать на OSD плейлист / выбор качества: Ctrl+M
-local debugInFile = false
+local infoInFile = false
 		if m_simpleTV.Control.ChangeAddress ~= 'No' then return end
 		if not m_simpleTV.Control.CurrentAddress:match('^[%p%a%s]*https?://[%a%.]*youtu[%.combe]')
 			and not m_simpleTV.Control.CurrentAddress:match('^https?://[w%.]*hooktube%.com')
@@ -28,8 +28,8 @@ local debugInFile = false
 		 return
 		end
 	local inAdr = m_simpleTV.Control.CurrentAddress
-	if debugInFile then
-		debugInFile = os.clock()
+	if infoInFile then
+		infoInFile = os.clock()
 	end
 	m_simpleTV.OSD.ShowMessageT({text = '', color = 0xFF8080FF, showTime = 1000, id = 'channelName'})
 	require 'ex'
@@ -161,14 +161,14 @@ local debugInFile = false
 	end
 	m_simpleTV.Control.ChangeAddress = 'Yes'
 	m_simpleTV.Control.CurrentAddress = 'error'
-	local userAgent = 'Mozilla/5.0 (Windows NT 10.0; rv:79.0) Gecko/20100101 Firefox/79.0'
+	local userAgent = 'Mozilla/5.0 (Windows NT 10.0; rv:80.0) Gecko/20100101 Firefox/81.0'
 	local userAgent_2 = 'Mozilla/5.0 (SMART-TV; Linux; Tizen 4.0.0.2) AppleWebkit/605.1.15 (KHTML, like Gecko) SamsungBrowser/9.2 TV Safari/605.1.15'
 	local session = m_simpleTV.Http.New(userAgent)
 		if not session then return end
 	m_simpleTV.Http.SetTimeout(session, 12000)
 	m_simpleTV.User.YT.DelayedAddress = nil
 	m_simpleTV.User.YT.isChapters = false
-	local debug_0
+	local info_0
 	local plstId
 	local plstIndex
 	local plstPos
@@ -1013,7 +1013,7 @@ https://github.com/grafi-tt/lunaJson
 		if isVideo and m_simpleTV.User.YT.isChapters then
 			link = string.format('%s<br><a href="simpleTVLua:m_simpleTV.Control.ExecuteAction(37) m_simpleTV.Control.ExecuteAction(116)" style="color:#154C9C; font-size: small; text-decoration:none">🕜 %s</a>', link, m_simpleTV.User.YT.Lng.chapter)
 		end
-		desc = string.format('<html><body bgcolor="#101013"><table width="99%%"><tr><td style="padding: 10px 10px 10px;"><a href="%s"><img src="%s"</a></td><td style="padding: 10px 10px 10px; color:#ebebeb; vertical-align:middle;"><h4><font color="#ebeb00">%s</h4><hr>%s%s</td></tr></table></body></html>', adr, logo,name, link, desc)
+		desc = string.format('<html><body bgcolor="#101013"><table width="99%%"><tr><td style="padding: 10px 10px 10px;"><a href="%s"><img src="%s"</a></td><td style="padding: 10px 10px 10px; color:#ebebeb; vertical-align:middle;"><h4><font color="#ebeb00">%s</h4><hr>%s%s</td></tr></table></body></html>', adr, logo, name, link, desc)
 	 return desc
 	end
 	local function ShowMessage(m, id)
@@ -1726,12 +1726,12 @@ https://github.com/grafi-tt/lunaJson
 				.. '&sts=' .. (m_simpleTV.User.YT.sts or '')
 				.. '&video_id='
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
-		if debugInFile then
-			debug_0 = os.clock()
+		if infoInFile then
+			info_0 = os.clock()
 		end
 		local rc, answer = m_simpleTV.Http.Request(session, {url = url .. m_simpleTV.User.YT.vId})
-		if debugInFile then
-			debug_0 = string.format('%.3f', (os.clock() - debug_0))
+		if infoInFile then
+			info_0 = string.format('%.3f', (os.clock() - info_0))
 		end
 		answer = answer or ''
 		local trailer = answer:match('trailerVideoId%%22%%3A%%22(.-)%%22')
@@ -1769,19 +1769,19 @@ https://github.com/grafi-tt/lunaJson
 							.. m_simpleTV.User.YT.Lng.noCookies
 					answer = httpErr
 				end
-				if debugInFile then
-					debug_in_file(answer, m_simpleTV.Common.GetMainPath(2) .. 'YouTube_answer.txt', true)
+				if infoInFile then
+					debug_in_file(answer, m_simpleTV.Common.GetMainPath(2) .. 'YT_player_response.txt', true)
 				end
 			 return nil, '⚠️ ' .. (httpErr or m_simpleTV.User.YT.Lng.videoNotExst)
 			end
-		if debugInFile then
+		if infoInFile then
 			local response = player_response
 			response = m_simpleTV.Common.fromPercentEncoding(response)
 			response = m_simpleTV.Common.fromPercentEncoding(response)
 			response = m_simpleTV.Common.fromPercentEncoding(response)
 			response = response:gsub('\\u0026', '&')
 			response = response:gsub('++', ' ')
-			debug_in_file(response, m_simpleTV.Common.GetMainPath(2) .. 'YouTube_answer.txt', true)
+			debug_in_file(response, m_simpleTV.Common.GetMainPath(2) .. 'YT_player_response.txt', true)
 		end
 		player_response = player_response:gsub('++', ' ')
 		player_response = m_simpleTV.Common.fromPercentEncoding(player_response)
@@ -2206,7 +2206,7 @@ https://github.com/grafi-tt/lunaJson
 					if audio_itags[i] == t[z].itag then
 						audioAdr = GetAdr(t[z].Address, t[z].isCipher)
 						audioAdr_isCipher = t[z].isCipher
-						if debugInFile then
+						if infoInFile then
 							audioItag = t[z].itag
 						end
 					 break
@@ -2310,7 +2310,7 @@ https://github.com/grafi-tt/lunaJson
 			for i = 1, #t do
 				t[i].Id = i
 			end
-		if debugInFile then
+		if infoInFile then
 			t[1].audioItag = audioItag
 		end
 		if m_simpleTV.User.YT.qlty < 100 then
@@ -4203,12 +4203,12 @@ https://github.com/grafi-tt/lunaJson
 			retAdr = DeCipherSign(retAdr)
 		end
 		m_simpleTV.Control.CurrentAddress = retAdr
-		if debugInFile then
-			local scr_time = string.format('%.3f', (os.clock() - debugInFile))
-			local calc = scr_time - debug_0
+		if infoInFile then
+			local scr_time = string.format('%.3f', (os.clock() - infoInFile))
+			local calc = scr_time - info_0
 			local adr = m_simpleTV.Common.fromPercentEncoding(retAdr)
 			local string_rep = string.rep('–', 70) .. '\n'
-			debugInFile = string_rep
+			infoInFile = '\n'
 						.. 'url: https://www.youtube.com/watch?v=' .. m_simpleTV.User.YT.vId .. '\n'
 						.. string_rep
 						.. 'video itag: ' .. tostring(t[index].itag)
@@ -4219,7 +4219,7 @@ https://github.com/grafi-tt/lunaJson
 						.. ' | "jsdecode" used: ' .. tostring(isJsDecode) .. '\n'
 						.. string_rep
 						.. 'time: ' .. scr_time .. ' s.'
-						.. ' | request: ' .. debug_0 .. ' s.'
+						.. ' | request: ' .. info_0 .. ' s.'
 						.. ' | calc: ' .. calc .. ' s.\n'
 						.. string_rep
 						.. 'title: ' .. title:gsub('%c', ' ') .. '\n'
@@ -4232,8 +4232,7 @@ https://github.com/grafi-tt/lunaJson
 						.. string_rep
 						.. 'address:\n\n'
 						.. adr:gsub('%$', '\n\n$'):gsub('slave=', 'slave=\n\n'):gsub('%#', '\n\n#\n\n') .. '\n'
-						.. string_rep
-			debug_in_file(debugInFile, m_simpleTV.Common.GetMainPath(2) .. 'YouTube_log.txt', true)
+			debug_in_file(infoInFile, m_simpleTV.Common.GetMainPath(2) .. 'YT_play_info.txt', true)
 		end
 	 return
 	end
