@@ -69,6 +69,8 @@ local infoInFile = false
 		inAdr = inAdr:gsub('//gaming%.', '//www.')
 		inAdr = inAdr:gsub('/featured%?', '')
 		inAdr = inAdr:gsub('&nohtml5=%w+', '')
+		inAdr = inAdr:gsub('&feature=%w+', '')
+		inAdr = inAdr:gsub('&playnext=%w+', '')
 		inAdr = inAdr:gsub('/tv%#/.-%?', '/watch?')
 		inAdr = inAdr:gsub('&resume', '')
 		inAdr = inAdr:gsub('&spf=%w+', '')
