@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (1/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (2/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,7 +27,6 @@ local infoInFile = false
 		then
 		 return
 		end
-	local inAdr = m_simpleTV.Control.CurrentAddress
 	if infoInFile then
 		infoInFile = os.clock()
 	end
@@ -36,6 +35,7 @@ local infoInFile = false
 	require 'lfs'
 	require 'jsdecode'
 	require 'asynPlsLoaderHelper'
+	local inAdr = m_simpleTV.Control.CurrentAddress
 	local urlAdr = inAdr
 	if inAdr:match('https?://')
 		and not (inAdr:match('&isChPlst=')
@@ -65,8 +65,8 @@ local infoInFile = false
 		inAdr = inAdr:gsub('/videoseries', '/playlist')
 		inAdr = inAdr:gsub('list_id=', 'list=')
 		inAdr = inAdr:gsub('/feed%?', '?')
-		inAdr = inAdr:gsub('//music%.', '//')
-		inAdr = inAdr:gsub('//gaming%.', '//')
+		inAdr = inAdr:gsub('//music%.', '//www.')
+		inAdr = inAdr:gsub('//gaming%.', '//www.')
 		inAdr = inAdr:gsub('/featured%?', '')
 		inAdr = inAdr:gsub('&nohtml5=%w+', '')
 		inAdr = inAdr:gsub('/tv%#/.-%?', '/watch?')
