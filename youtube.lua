@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (2/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (4/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -1462,8 +1462,6 @@ https://github.com/grafi-tt/lunaJson
 		local thumbWidth = tonumber(q[1]) or 0
 		local thumbHeight = tonumber(q[2]) or 0
 		local NPattern = q[7]
-		urlPattern = urlPattern:gsub('$L', #t - 2)
-		urlPattern = urlPattern .. '&sigh=' .. m_simpleTV.Common.toPercentEncoding(q[8])
 			if samplingFrequency == 0
 				or thumbsPerImage == 0
 				or thumbWidth == 0
@@ -1472,6 +1470,8 @@ https://github.com/grafi-tt/lunaJson
 			then
 			 return
 			end
+		urlPattern = urlPattern:gsub('$L', #t - 2)
+		urlPattern = urlPattern .. '&sigh=' .. m_simpleTV.Common.toPercentEncoding(q[8])
 		m_simpleTV.User.YT.ThumbsInfo = {}
 		m_simpleTV.User.YT.ThumbsInfo.samplingFrequency = samplingFrequency
 		m_simpleTV.User.YT.ThumbsInfo.thumbsPerImage = thumbsPerImage
