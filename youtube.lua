@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (4/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (5/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -163,7 +163,7 @@ local infoInFile = false
 	end
 	m_simpleTV.Control.ChangeAddress = 'Yes'
 	m_simpleTV.Control.CurrentAddress = 'error'
-	local userAgent = 'Mozilla/5.0 (Windows NT 10.0; rv:80.0) Gecko/20100101 Firefox/81.0'
+	local userAgent = 'Mozilla/5.0 (Windows NT 10.0; rv:81.0) Gecko/20100101 Firefox/81.0'
 	local userAgent_2 = 'Mozilla/5.0 (SMART-TV; Linux; Tizen 4.0.0.2) AppleWebkit/605.1.15 (KHTML, like Gecko) SamsungBrowser/9.2 TV Safari/605.1.15'
 	local session = m_simpleTV.Http.New(userAgent)
 		if not session then return end
