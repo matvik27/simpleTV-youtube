@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (6/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (7/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
 -- использовались скрипты http://iptv.gen12.net/bugtracker/view.php?id=986
 -- UTF-8 w/o BOM
 -- поиск из окна "Открыть URL" (Ctrl+N), префиксы: - (видео), -- (плейлисты), --- (каналы), -+ (прямые трансляции)
--- авторизаця: файл формата "Netscape HTTP Cookie File" - cookies.txt поместить в папку 'work'
+-- авторизаця: файл формата "Netscape HTTP Cookie File" - cookies.txt поместить в папку 'work' (https://addons.mozilla.org/en-US/firefox/addon/cookies-txt )
 -- показать на OSD плейлист / выбор качества: Ctrl+M
 local infoInFile = false
 		if m_simpleTV.Control.ChangeAddress ~= 'No' then return end
@@ -3584,31 +3584,6 @@ https://github.com/grafi-tt/lunaJson
 					StopOnErr(5)
 				 return
 				end
-			if inAdr:match('list=RD')
-				and plstIndex == 1
-			then
-				if videoId ~= '' then
-					local plstPicIdRD = plstId:gsub('^RD', '')
-					m_simpleTV.User.YT.AddToBaseUrlinAdr = 'https://www.youtube.com/watch?v=' .. videoId .. '&list=' .. plstId
-					plstPicId = videoId
-					m_simpleTV.User.YT.AddToBaseVideoIdPlst = videoId
-				end
-				local answer0
-				if answer:match('{"playlistPanelVideoRenderer":{"title".-%]}}') then
-					answer0 = answer:match('.+{"playlistPanelVideoRenderer":{"title"(.-)%]}}')
-				else
-					answer0 = ''
-				end
-				local Id = answer0:match('"videoId":"([^"]+)')
-					if Id then
-						local Adr = 'https://www.youtube.com/watch?v=' .. Id .. '&list=' .. plstId
-						rc, answer = m_simpleTV.Http.Request(session, {url = Adr})
-							if rc ~= 200 then
-								StopOnErr(5.1)
-							 return
-							end
-					end
-			end
 			answer = answer:gsub('\\"', '%%22')
 			local tab, i = {}, 1
 			local name, selected, timer, adr, panelDescName
@@ -3776,15 +3751,9 @@ https://github.com/grafi-tt/lunaJson
 			if t[index].isCipher then
 				retAdr = DeCipherSign(retAdr)
 			end
-			if plstId:match('^RD') and videoId == '' then
-				m_simpleTV.User.YT.AddToBaseUrlinAdr = inAdr
-				plstPicId = tab[1].Address:match('watch%?v=([^&]+)')
-				m_simpleTV.User.YT.AddToBaseVideoIdPlst = plstPicId
-			elseif not plstId:match('^RD') then
-				m_simpleTV.User.YT.AddToBaseUrlinAdr = inAdr
-				plstPicId = tab[1].Address:match('watch%?v=([^&]+)')
-				m_simpleTV.User.YT.AddToBaseVideoIdPlst = plstPicId
-			end
+			m_simpleTV.User.YT.AddToBaseUrlinAdr = inAdr
+			plstPicId = tab[1].Address:match('watch%?v=([^&]+)')
+			m_simpleTV.User.YT.AddToBaseVideoIdPlst = plstPicId
 			if m_simpleTV.Control.MainMode == 0 then
 				plstPicId = plstPicId or tab[1].Address:match('watch%?v=([^&]+)')
 				m_simpleTV.Control.ChangeChannelLogo(m_simpleTV.User.paramScriptForSkin_logoYT
