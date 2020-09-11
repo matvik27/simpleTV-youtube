@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (7/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (11/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -1242,7 +1242,7 @@ https://github.com/grafi-tt/lunaJson
 					for j = 1, 10 do
 							if k > stopSearch then break end
 						url = 'https://youtube.com/search_ajax?style=json&search_query=' .. sAdr .. '&page=' .. j .. '&hl=' .. m_simpleTV.User.YT.Lng.hl
-						local rc, answer = m_simpleTV.Http.Request(session, {url = url, headers = m_simpleTV.User.YT.apiKeyHeader})
+						local rc, answer = m_simpleTV.Http.Request(session, {url = url, headers = 'X-YouTube-Client-Name: 56\nX-YouTube-Client-Version: 20200911\nReferer: https://www.youtube.com/'})
 							if rc ~= 200 then break end
 						err, tab = pcall(lunaJson_decode, answer)
 							if err == false then return end
