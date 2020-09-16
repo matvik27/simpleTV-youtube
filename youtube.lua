@@ -1695,6 +1695,8 @@ https://github.com/grafi-tt/lunaJson
 				index = index - 1
 			elseif #t > index then
 				index = index + 1
+			else
+			 return m_simpleTV.User.YT.logoDisk .. '$OPT:video-filter=adjust$OPT:saturation=0$OPT:video-filter=gaussianblur$OPT:image-duration=5'
 			end
 			url = t[index].Address
 			if t[index].isCipher then
