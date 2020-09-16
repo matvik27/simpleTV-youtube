@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (11/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (16/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -1031,8 +1031,8 @@ https://github.com/grafi-tt/lunaJson
 					end
 				local dat = fhandle:read(100)
 				fhandle:close()
-				dat = (dat:match('%d+[/%.%-]%d+[/%.%-]%d+') or '') .. ']'
-			 return decode64('WW91VHViZSBieSBOZXh0ZXJyIGVkaXRpb24g') .. dat
+				dat = ' [' .. (dat:match('%d+[/%.%-]%d+[/%.%-]%d+') or '') .. ']'
+			 return decode64('WW91VHViZSBieSBOZXh0ZXJyIGVkaXRpb24') .. dat
 			end
 		m_simpleTV.Control.ExecuteAction(37)
 		if not info then
@@ -1395,10 +1395,10 @@ https://github.com/grafi-tt/lunaJson
 	local function GetUrlWatchVideos(url)
 		local session = m_simpleTV.Http.New(userAgent, nil, true)
 			if not session then return end
-		m_simpleTV.Http.SetTimeout(session, 12000)
+		m_simpleTV.Http.SetTimeout(session, 5000)
 		m_simpleTV.Http.SetRedirectAllow(session, false)
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
-		local rc = m_simpleTV.Http.Request(session, {url = url})
+		m_simpleTV.Http.Request(session, {url = url})
 		local raw = m_simpleTV.Http.GetRawHeader(session)
 		m_simpleTV.Http.Close(session)
 			if not raw then return end
@@ -1671,6 +1671,31 @@ https://github.com/grafi-tt/lunaJson
 			end
 		end
 	 return index or 1
+	end
+	local function CheckUrl(url, t, index)
+		if t[index].isCipher then
+			url = DeCipherSign(url)
+		end
+		local session = m_simpleTV.Http.New(userAgent, nil, true)
+			if not session then return end
+		m_simpleTV.Http.SetTimeout(session, 5000)
+		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
+		m_simpleTV.Http.Request(session, {url = url:gsub('$.+',''), method = 'head'})
+		local raw = m_simpleTV.Http.GetRawHeader(session)
+		m_simpleTV.Http.Close(session)
+			if not raw then return end
+		if raw:match('Content%-Length: 0') then
+			if index > 2 then
+				index = index - 1
+			elseif #t > index then
+				index = index + 1
+			end
+			url = t[index].Address
+			if t[index].isCipher then
+				url = DeCipherSign(url)
+			end
+		end
+	 return url
 	end
 	local function GetStreamsTab(vId)
 			local function idCorrect(id)
@@ -2060,7 +2085,7 @@ https://github.com/grafi-tt/lunaJson
 							17, -- 144
 							36, -- 240
 							43, 18, -- 360
-							-- 22, -- 720 mp4
+							22, -- 720 mp4
 							}
 			opt_2xx = '$OPT:demux=avcodec'
 		end
@@ -3542,9 +3567,7 @@ https://github.com/grafi-tt/lunaJson
 		end
 		retAdr = retAdr or t[index].Address
 		m_simpleTV.User.YT.QltyIndex = index
-		if t[index].isCipher then
-			retAdr = DeCipherSign(retAdr)
-		end
+		retAdr = CheckUrl(retAdr, t,index)
 		m_simpleTV.Control.CurrentTitle_UTF8 = header
 		if not (#tab == 1 and m_simpleTV.User.YT.duration and m_simpleTV.User.YT.duration > 600) then
 			retAdr = retAdr .. '$OPT:POSITIONTOCONTINUE=0'
@@ -3748,9 +3771,7 @@ https://github.com/grafi-tt/lunaJson
 			retAdr = retAdr or t[index].Address
 			m_simpleTV.User.YT.QltyIndex = index
 			m_simpleTV.Control.CurrentTitle_UTF8 = header
-			if t[index].isCipher then
-				retAdr = DeCipherSign(retAdr)
-			end
+			retAdr = CheckUrl(retAdr, t,index)
 			m_simpleTV.User.YT.AddToBaseUrlinAdr = inAdr
 			plstPicId = tab[1].Address:match('watch%?v=([^&]+)')
 			m_simpleTV.User.YT.AddToBaseVideoIdPlst = plstPicId
@@ -3955,9 +3976,7 @@ https://github.com/grafi-tt/lunaJson
 			end
 			retAdr = retAdr or t[index].Address
 			m_simpleTV.User.YT.QltyIndex = index
-			if t[index].isCipher then
-				retAdr = DeCipherSign(retAdr)
-			end
+			retAdr = CheckUrl(retAdr, t,index)
 			local plstPicId
 			if plstId:match('^RD') then
 				local plstPicIdRD = plstId:gsub('^RD', '')
@@ -4020,6 +4039,7 @@ https://github.com/grafi-tt/lunaJson
 		m_simpleTV.User.YT.QltyTab = t
 		local index = GetQltyIndex(t)
 		local retAdr = t[index].Address
+		retAdr = CheckUrl(retAdr, t, index)
 		m_simpleTV.User.YT.QltyIndex = index
 		if isVideo then
 			local name = title:gsub('%c.-$', '')
@@ -4170,9 +4190,7 @@ https://github.com/grafi-tt/lunaJson
 			end
 			ShowMessage(title)
 		end
-		if t[index].isCipher then
-			retAdr = DeCipherSign(retAdr)
-		end
+		m_simpleTV.Http.Close(session)
 		m_simpleTV.Control.CurrentAddress = retAdr
 		if infoInFile then
 			local scr_time = string.format('%.3f', (os.clock() - infoInFile))
