@@ -17,7 +17,7 @@
 -- поиск из окна "Открыть URL" (Ctrl+N), префиксы: - (видео), -- (плейлисты), --- (каналы), -+ (прямые трансляции)
 -- авторизаця: файл формата "Netscape HTTP Cookie File" - cookies.txt поместить в папку 'work' (https://addons.mozilla.org/en-US/firefox/addon/cookies-txt )
 -- показать на OSD плейлист / выбор качества: Ctrl+M
-local infoInFile = false
+local infoInFile = true
 		if m_simpleTV.Control.ChangeAddress ~= 'No' then return end
 		if not m_simpleTV.Control.CurrentAddress:match('^[%p%a%s]*https?://[%a%.]*youtu[%.combe]')
 			and not m_simpleTV.Control.CurrentAddress:match('^https?://[w%.]*hooktube%.com')
@@ -1673,10 +1673,13 @@ https://github.com/grafi-tt/lunaJson
 	 return index or 1
 	end
 	local function CheckUrl(url, t, index)
+			if url == 'wait' then
+			 return url
+			end
 		if t[index].isCipher then
 			url = DeCipherSign(url)
 		end
-			if index == 1 then
+			if t[index].itag ~= 22 then
 			 return url
 			end
 		local session = m_simpleTV.Http.New(userAgent, nil, true)
