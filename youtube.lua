@@ -1679,7 +1679,9 @@ https://github.com/grafi-tt/lunaJson
 		if t[index].isCipher then
 			url = DeCipherSign(url)
 		end
-			if t[index].itag ~= 22 then
+			if index == 1
+				or (t[index].itag and t[index].itag ~= 22)
+			then
 			 return url
 			end
 		local session = m_simpleTV.Http.New(userAgent, nil, true)
