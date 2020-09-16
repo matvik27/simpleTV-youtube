@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (16/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (17/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -1676,6 +1676,9 @@ https://github.com/grafi-tt/lunaJson
 		if t[index].isCipher then
 			url = DeCipherSign(url)
 		end
+			if index == 1 then
+			 return url
+			end
 		local session = m_simpleTV.Http.New(userAgent, nil, true)
 			if not session then
 			 return url
@@ -1690,7 +1693,7 @@ https://github.com/grafi-tt/lunaJson
 		if raw:match('Content%-Length: 0') then
 			if index > 2 then
 				index = index - 1
-			elseif #t > index and index > 1 then
+			elseif #t > index then
 				index = index + 1
 			end
 			url = t[index].Address
