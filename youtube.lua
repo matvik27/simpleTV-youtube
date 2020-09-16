@@ -1395,7 +1395,7 @@ https://github.com/grafi-tt/lunaJson
 	local function GetUrlWatchVideos(url)
 		local session = m_simpleTV.Http.New(userAgent, nil, true)
 			if not session then return end
-		m_simpleTV.Http.SetTimeout(session, 5000)
+		m_simpleTV.Http.SetTimeout(session, 8000)
 		m_simpleTV.Http.SetRedirectAllow(session, false)
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		m_simpleTV.Http.Request(session, {url = url})
@@ -1677,13 +1677,16 @@ https://github.com/grafi-tt/lunaJson
 			url = DeCipherSign(url)
 		end
 		local session = m_simpleTV.Http.New(userAgent, nil, true)
-			if not session then return end
-		m_simpleTV.Http.SetTimeout(session, 5000)
-		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
+			if not session then
+			 return url
+			end
+		m_simpleTV.Http.SetTimeout(session, 8000)
 		m_simpleTV.Http.Request(session, {url = url:gsub('$.+',''), method = 'head'})
 		local raw = m_simpleTV.Http.GetRawHeader(session)
 		m_simpleTV.Http.Close(session)
-			if not raw then return end
+			if not raw then
+			 return url
+			end
 		if raw:match('Content%-Length: 0') then
 			if index > 2 then
 				index = index - 1
@@ -2604,9 +2607,8 @@ https://github.com/grafi-tt/lunaJson
 				t.ExtButton0 = {ButtonEnable = true, ButtonName = m_simpleTV.User.YT.Lng.search .. ' 🔎'}
 			end
 		end
-		local index = m_simpleTV.User.YT.QltyIndex
-		local title = m_simpleTV.User.YT.Lng.qlty
-		local ret, id = m_simpleTV.OSD.ShowSelect_UTF8('⚙ ' .. title, index - 1, t, 5000, 1 + 4)
+		local ret, id = m_simpleTV.OSD.ShowSelect_UTF8('⚙ ' .. m_simpleTV.User.YT.Lng.qlty
+														, m_simpleTV.User.YT.QltyIndex - 1, t, 5000, 1 + 4)
 		if not id then
 			m_simpleTV.Control.ExecuteAction(37)
 		end
@@ -2636,14 +2638,11 @@ https://github.com/grafi-tt/lunaJson
 				SetBackground()
 			end
 			m_simpleTV.User.YT.QltyIndex = id
-			m_simpleTV.Control.SetTitle(' ')
 			if isInfoPanel == false then
 				ShowMessage(t[id].Name)
 			end
 			local adr = t[id].Address:gsub('$OPT:start%-time=%d+', '')
-			if t[id].isCipher then
-				adr = DeCipherSign(adr)
-			end
+			adr = CheckUrl(adr, t, id)
 			m_simpleTV.Control.SetNewAddressT({address = adr, position = m_simpleTV.Control.GetPosition()})
 		end
 		if ret == 2
@@ -3057,9 +3056,7 @@ https://github.com/grafi-tt/lunaJson
 		end
 		retAdr = retAdr or t[index].Address
 		m_simpleTV.User.YT.QltyIndex = index
-		if t[index].isCipher then
-			retAdr = DeCipherSign(retAdr)
-		end
+		retAdr = CheckUrl(retAdr, t, index)
 		if m_simpleTV.Control.MainMode == 0 then
 			m_simpleTV.Control.ChangeChannelLogo(m_simpleTV.User.paramScriptForSkin_logoYT
 												or 'https://i.ytimg.com/vi/' .. vId .. '/hqdefault.jpg'
