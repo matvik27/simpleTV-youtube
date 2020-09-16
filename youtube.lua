@@ -1687,7 +1687,7 @@ https://github.com/grafi-tt/lunaJson
 		if raw:match('Content%-Length: 0') then
 			if index > 2 then
 				index = index - 1
-			elseif #t > index then
+			elseif #t > index and index > 1 then
 				index = index + 1
 			end
 			url = t[index].Address
