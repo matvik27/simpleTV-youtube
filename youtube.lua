@@ -2843,7 +2843,7 @@ https://github.com/grafi-tt/lunaJson
 				StopOnErr(2, 'feed channels')
 			 return
 			end
-		answer = answer:match('window%["ytInitialData"%] = ([^;]+)')
+		answer = answer:match('window%["ytInitialData"%].+')
 			if not answer then
 				StopOnErr(2, 'feed channels')
 			 return
@@ -2853,13 +2853,13 @@ https://github.com/grafi-tt/lunaJson
 		m_simpleTV.Control.SetTitle(title)
 		local tab, i = {}, 1
 		local name, logo, adr, desc, count, panelDescName, subCount
-			for g in answer:gmatch('"channelRenderer":{"channelId".-"subscribeButton"') do
+			for g in answer:gmatch('"channelRenderer":{"channelId".-}}}%]}}}') do
 				name = g:match('"title":{"simpleText":"([^"]+)')
-				logo = g:match('"thumbnails":%[.+"url":"([^"]+)')
+				logo = g:match('"thumbnails":%[.-,{"url":"([^"]+)')
 				adr = g:match('"webCommandMetadata":{"url":"([^"]+)')
-				desc = g:match('"descriptionSnippet":{"simpleText":"([^"]+)')
-				count = g:match('"videoCountText":{"runs":%[{"text":"([^"]+)')
-				subCount = g:match('"subscriberCountText":{"runs":%[{"text":"([^"]+)')
+				desc = g:match('"descriptionSnippet":{"runs":%[{"text":"([^"]+)')
+				count, count2  = g:match('"videoCountText":{"runs":%[{"text":"([^"]+)"},{"text":"([^"]+)')
+				subCount = g:match('"subscriberCountText":{"simpleText":"([^"]+)')
 				if name and adr then
 					tab[i] = {}
 					tab[i].Id = i
@@ -2877,6 +2877,7 @@ https://github.com/grafi-tt/lunaJson
 							panelDescName = m_simpleTV.User.YT.Lng.desc .. ' | '
 						end
 						tab[i].InfoPanelDesc = desc_html(desc, tab[i].InfoPanelLogo, name, tab[i].Address)
+						count = (count or '') .. (count2 or '')
 						if subCount and subCount ~= '' then
 							if count and count ~= '' then
 								subCount = ' | ' .. subCount
@@ -3296,7 +3297,7 @@ https://github.com/grafi-tt/lunaJson
 				for w in answer:gmatch('"compactStationRenderer".-"thumbnailOverlays"') do
 					name = w:match('text":"([^"]+)')
 					adr = w:match('"url":"([^"]+)')
-					logo = w:match('"thumbnail":{"thumbnails":[{"url":"([^"]+)')
+					logo = w:match('"thumbnails":%["url":"([^"]+)') or ''
 						if not adr or not name then break end
 					adr = adr:gsub('\\u0026', '&')
 					tab[i] = {}
