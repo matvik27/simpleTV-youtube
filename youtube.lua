@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (17/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (19/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -2849,7 +2849,7 @@ https://github.com/grafi-tt/lunaJson
 			 return
 			end
 		answer = answer:gsub('\\"', '%%22')
-		local title = answer:match('"header":{"feedTabbedHeaderRenderer":{"title":{"simpleText":"([^"]+)') or 'feed channels'
+		local title = answer:match('"header":{"feedTabbedHeaderRenderer":{"title":{"runs":%[{"text":"([^"]+)') or 'feed channels'
 		m_simpleTV.Control.SetTitle(title)
 		local tab, i = {}, 1
 		local name, logo, adr, desc, count, panelDescName, subCount
