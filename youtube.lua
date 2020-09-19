@@ -67,7 +67,7 @@ local infoInFile = false
 		inAdr = inAdr:gsub('/feed%?', '?')
 		inAdr = inAdr:gsub('//music%.', '//www.')
 		inAdr = inAdr:gsub('//gaming%.', '//www.')
-		inAdr = inAdr:gsub('/featured%?', '')
+		inAdr = inAdr:gsub('/featured%?*', '')
 		inAdr = inAdr:gsub('&nohtml5=%w+', '')
 		inAdr = inAdr:gsub('&feature=%w+', '')
 		inAdr = inAdr:gsub('&playnext=%w+', '')
