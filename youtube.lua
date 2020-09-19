@@ -2414,10 +2414,17 @@ https://github.com/grafi-tt/lunaJson
 							times = m_simpleTV.User.YT.Lng.live
 							tab[i].Name = string.format('%s (%s)', name, times)
 						end
+						local count = c:match('"shortViewCountText":{"simpleText":"([^"]+)')
+						local publis = c:match('"publishedTimeText":{"simpleText":"([^"]+)')
+						if count and publis then
+							count = publis .. ' ◽ ' .. count
+						else
+							count = count or publis or ''
+						end
 						tab[i].InfoPanelLogo = string.format('https://i.ytimg.com/vi/%s/default.jpg', adr)
 						tab[i].InfoPanelName = name
 						tab[i].InfoPanelDesc = desc_html(nil, tab[i].InfoPanelLogo, name, tab[i].Address)
-						tab[i].InfoPanelTitle = string.format(' | %s', times)
+						tab[i].InfoPanelTitle = string.format('%s | %s', count, times)
 						tab[i].InfoPanelShowTime = 10000
 					end
 					i = i + 1
