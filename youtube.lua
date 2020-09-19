@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (19/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (20/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -2395,8 +2395,8 @@ https://github.com/grafi-tt/lunaJson
 		local i = #tab + 1
 		local ret = false
 		str = str:gsub('\\"', '%%22')
-			for c in str:gmatch('VideoRenderer":{"videoId":".-}%]}}}%]}}') do
-				local name = c:match('"simpleText":"([^"]+)')
+			for c in str:gmatch('VideoRenderer".-thumbnailOverlayNowPlayingRenderer') do
+				local name = c:match('"title":{"runs":%[{"text":"([^"]+)') or c:match('"simpleText":"([^"]+)')
 				local adr = c:match('"videoId":"([^"]+)')
 				local times = c:match('"thumbnailOverlayTimeStatusRenderer".-"simpleText":"([^"]+)')
 				if name and adr then
@@ -3469,12 +3469,7 @@ https://github.com/grafi-tt/lunaJson
 		end
 		m_simpleTV.User.YT.isVideo = false
 		local url = inAdr:gsub('&restart', '')
-		local sort = url:gsub('sort=dd', '')
-		sort = url:match('sort=%a+')
-		if not sort then
-			sort = 'sort=dd'
-		end
-		if sort == 'sort=dd' then
+		if url:match('sort=dd') or not url:match('sort=') then
 			local plstId
 			local chId = url:match('/channel/([^/]+)')
 			if not chId then
