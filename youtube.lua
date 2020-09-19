@@ -3469,27 +3469,6 @@ https://github.com/grafi-tt/lunaJson
 		end
 		m_simpleTV.User.YT.isVideo = false
 		local url = inAdr:gsub('&restart', '')
-		if url:match('sort=dd') or not url:match('sort=') then
-			local plstId
-			local chId = url:match('/channel/([^/]+)')
-			if not chId then
-				local rc, answer = m_simpleTV.Http.Request(session, {url = url})
-				if answer then
-					chId = answer:match('/channel/([^"/]+)')
-				end
-			end
-			if chId then
-				plstId = string.format('UU%s', chId:sub(3))
-			end
-				if plstId then
-					url = string.format('https://www.youtube.com/playlist?list=%s&restart', plstId)
-					m_simpleTV.Http.Close(session)
-					m_simpleTV.Control.ChangeAddress = 'No'
-					m_simpleTV.Control.CurrentAddress = url
-					dofile(m_simpleTV.MainScriptDir .. 'user\\video\\youtube.lua')
-				 return
-				end
-		end
 		local t0 = {}
 		t0.url = url
 		t0.method = 'get'
