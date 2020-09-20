@@ -2419,12 +2419,17 @@ https://github.com/grafi-tt/lunaJson
 						if count and publis then
 							count = publis .. ' ◽ ' .. count
 						else
-							count = count or publis or ''
+							count = count or publis
+						end
+						if count then
+							count = '| ' .. count .. ' '
+						else
+							count = ''
 						end
 						tab[i].InfoPanelLogo = string.format('https://i.ytimg.com/vi/%s/default.jpg', adr)
 						tab[i].InfoPanelName = name
 						tab[i].InfoPanelDesc = desc_html(nil, tab[i].InfoPanelLogo, name, tab[i].Address)
-						tab[i].InfoPanelTitle = string.format('%s | %s', count, times)
+						tab[i].InfoPanelTitle = string.format('%s| %s', count, times)
 						tab[i].InfoPanelShowTime = 10000
 					end
 					i = i + 1
@@ -2865,7 +2870,7 @@ https://github.com/grafi-tt/lunaJson
 				logo = g:match('"thumbnails":%[.-,{"url":"([^"]+)')
 				adr = g:match('"webCommandMetadata":{"url":"([^"]+)')
 				desc = g:match('"descriptionSnippet":{"runs":%[{"text":"([^"]+)')
-				count, count2  = g:match('"videoCountText":{"runs":%[{"text":"([^"]+)"},{"text":"([^"]+)')
+				count, count2 = g:match('"videoCountText":{"runs":%[{"text":"([^"]+)"},{"text":"([^"]+)')
 				subCount = g:match('"subscriberCountText":{"simpleText":"([^"]+)')
 				if name and adr then
 					tab[i] = {}
