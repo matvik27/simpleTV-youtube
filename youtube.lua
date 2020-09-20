@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (20/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (21/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -2499,7 +2499,7 @@ https://github.com/grafi-tt/lunaJson
 			end
 		ret.request = {}
 		ret.request.url = string.format('https://www.youtube.com/browse_ajax?ctoken=%s&continuation=%s&itct=%s', continuation, continuation, itct)
-		ret.request.headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200716.00.00\nReferer: https://www.youtube.com/'
+		ret.request.headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200918.05.01'
 		ret.Count = #params.User.tab
 	 return ret
 	end
@@ -2849,42 +2849,36 @@ https://github.com/grafi-tt/lunaJson
 	end
 	if inAdr:match('/feed/channels') then
 		m_simpleTV.Http.SetCookies(session, inAdr, m_simpleTV.User.YT.cookies, '')
-		local rc, answer = m_simpleTV.Http.Request(session, {url = inAdr})
+		local rc, answer = m_simpleTV.Http.Request(session, {url = inAdr, headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200918.05.01'})
 		m_simpleTV.Http.Close(session)
 			if rc ~= 200 then
 				StopOnErr(2, 'feed channels')
 			 return
 			end
-		answer = answer:match('window%["ytInitialData"%].+')
-			if not answer then
-				StopOnErr(2, 'feed channels')
-			 return
-			end
 		answer = answer:gsub('\\"', '%%22')
-		local title = answer:match('"header":{"feedTabbedHeaderRenderer":{"title":{"runs":%[{"text":"([^"]+)') or 'feed channels'
+		local title = answer:match('"feedTabbedHeaderRenderer":{"title":{"runs":%[{"text":"([^"]+)') or 'feed channels'
 		m_simpleTV.Control.SetTitle(title)
 		local tab, i = {}, 1
-		local name, logo, adr, desc, count, panelDescName, subCount
-			for g in answer:gmatch('"channelRenderer":{"channelId".-}}}%]}}}') do
-				name = g:match('"title":{"simpleText":"([^"]+)')
-				logo = g:match('"thumbnails":%[.-,{"url":"([^"]+)')
-				adr = g:match('"webCommandMetadata":{"url":"([^"]+)')
-				desc = g:match('"descriptionSnippet":{"runs":%[{"text":"([^"]+)')
-				count, count2 = g:match('"videoCountText":{"runs":%[{"text":"([^"]+)"},{"text":"([^"]+)')
-				subCount = g:match('"subscriberCountText":{"simpleText":"([^"]+)')
+			for g in answer:gmatch('"channelRenderer".-"subscribeButton"') do
+				local name = g:match('"simpleText":"([^"]+)')
+				local logo = g:match('"thumbnails":%[.-,{"url":"([^"]+)')
+				local adr = g:match('"channelId":"([^"]+)')
+				local desc = g:match('"descriptionSnippet":{"runs":%[{"text":"([^"]+)')
+				local count, count2 = g:match('"videoCountText":{"runs":%[{"text":"([^"]+)"},{"text":"([^"]+)')
+				local subCount = g:match('"subscriberCountText":{"simpleText":"([^"]+)')
 				if name and adr then
 					tab[i] = {}
 					tab[i].Id = i
-					tab[i].Address = 'https://www.youtube.com' .. adr .. '&isLogo=false'
+					tab[i].Address = 'https://www.youtube.com/channel/' .. adr .. '&isLogo=false'
 					name = title_clean(name)
 					if isInfoPanel == false then
 						tab[i].Name = name
 					else
 						tab[i].Name = name
-						tab[i].InfoPanelLogo = logo:gsub('^//', 'https://')
+						tab[i].InfoPanelLogo = logo
 						tab[i].InfoPanelShowTime = 10000
 						tab[i].InfoPanelName = m_simpleTV.User.YT.Lng.channel .. ': ' .. name
-						panelDescName = nil
+						local panelDescName
 						if desc and desc ~= '' then
 							panelDescName = m_simpleTV.User.YT.Lng.desc .. ' | '
 						end
@@ -2905,7 +2899,7 @@ https://github.com/grafi-tt/lunaJson
 				end
 			end
 			if i == 1 then
-				StopOnErr(3, 'no subscriptions channels')
+				StopOnErr(2, 'not found subscriptions channels')
 			 return
 			end
 		local FilterType, SortOrder, AutoNumberFormat
@@ -3188,7 +3182,7 @@ https://github.com/grafi-tt/lunaJson
 				end
 		end
 		m_simpleTV.Http.SetCookies(session, url, 'PREF=hl=' .. m_simpleTV.User.YT.Lng.hl .. ';', '')
-		local rc, answer = m_simpleTV.Http.Request(session, {url = url:gsub('&restart', ''), headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200716.00.00\nReferer: https://www.youtube.com/'})
+		local rc, answer = m_simpleTV.Http.Request(session, {url = url:gsub('&restart', ''), headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200918.05.01'})
 			if rc ~= 200 then
 				StopOnErr(4, 'cant load channal page')
 			 return
@@ -3198,7 +3192,7 @@ https://github.com/grafi-tt/lunaJson
 		local chTitle = answer:match('channelMetadataRenderer.-"title":"([^"]+)') or 'playlists'
 		if chTitle == 'playlists' and not url:match('browse_ajax') then
 			m_simpleTV.Http.SetCookies(session, url, 'PREF=hl=' .. m_simpleTV.User.YT.Lng.hl .. ';', '')
-			rc, answer = m_simpleTV.Http.Request(session, {url = url:gsub('&restart', ''), headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200716.00.00\nReferer: https://www.youtube.com/'})
+			rc, answer = m_simpleTV.Http.Request(session, {url = url:gsub('&restart', ''), headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200918.05.01'})
 				if rc ~= 200 then
 					StopOnErr(4.11, 'cant load channal page')
 				 return
