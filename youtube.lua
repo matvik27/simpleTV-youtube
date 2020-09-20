@@ -2422,14 +2422,14 @@ https://github.com/grafi-tt/lunaJson
 							count = count or publis
 						end
 						if count then
-							count = '| ' .. count .. ' '
+							count = ' | ' .. count
 						else
 							count = ''
 						end
 						tab[i].InfoPanelLogo = string.format('https://i.ytimg.com/vi/%s/default.jpg', adr)
 						tab[i].InfoPanelName = name
 						tab[i].InfoPanelDesc = desc_html(nil, tab[i].InfoPanelLogo, name, tab[i].Address)
-						tab[i].InfoPanelTitle = string.format('%s| %s', count, times)
+						tab[i].InfoPanelTitle = string.format('%s | %s', count, times)
 						tab[i].InfoPanelShowTime = 10000
 					end
 					i = i + 1
