@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (21/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (22/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -2782,6 +2782,7 @@ https://github.com/grafi-tt/lunaJson
 		if not m_simpleTV.User.YT.isAuth
 			and (inAdr:match('list=WL')
 			or inAdr:match('/shared%?ci=')
+			or inAdr:match('list=LL')
 			or inAdr:match('/feed/channels'))
 		then
 			local err = '⚠️ ' .. m_simpleTV.User.YT.Lng.noCookies
@@ -3111,7 +3112,9 @@ https://github.com/grafi-tt/lunaJson
 	if ((inAdr:match('list=RD')
 		or inAdr:match('list=TL'))
 		and not inAdr:match('/embed'))
-		or ((inAdr:match('list=WL') or inAdr:match('list=OL'))
+		or ((inAdr:match('list=WL')
+			or inAdr:match('list=OL')
+			or inAdr:match('list=LL'))
 			and not inAdr:match('index='))
 	then
 		inAdr = inAdr .. '&index=1'
