@@ -2783,6 +2783,7 @@ https://github.com/grafi-tt/lunaJson
 			and (inAdr:match('list=WL')
 			or inAdr:match('/shared%?ci=')
 			or inAdr:match('list=LL')
+			or inAdr:match('list=LM')
 			or inAdr:match('/feed/channels'))
 		then
 			local err = '⚠️ ' .. m_simpleTV.User.YT.Lng.noCookies
@@ -3114,6 +3115,7 @@ https://github.com/grafi-tt/lunaJson
 		and not inAdr:match('/embed'))
 		or ((inAdr:match('list=WL')
 			or inAdr:match('list=OL')
+			or inAdr:match('list=LM')
 			or inAdr:match('list=LL'))
 			and not inAdr:match('index='))
 	then
@@ -3636,7 +3638,7 @@ https://github.com/grafi-tt/lunaJson
 				end
 				if i == 1 then
 					for gg in answer:gmatch('{"playlistVideoRenderer":{"videoId".-%]}}') do
-						name = gg:match('"title".-"simpleText":"([^"]+)')
+						name = gg:match('"title".-"text":"([^"]+)')
 						timer = gg:match('"lengthText".-"simpleText":"(%d+:.-)"') or ''
 						adr = gg:match('"videoId":"([^"]+)')
 						if name and adr then
