@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (22/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (23/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -3686,6 +3686,9 @@ https://github.com/grafi-tt/lunaJson
 						or answer:match('"microformat".-"title":"([^"]+)')
 						or 'title - not found'
 			header = title_clean(header)
+			if inAdr:match('list=LM') then
+				header = header .. ' 🎵'
+			end
 			m_simpleTV.User.YT.Plst = tab
 			m_simpleTV.User.YT.plstHeader = header
 			local pl = 0
