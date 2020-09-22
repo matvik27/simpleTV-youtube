@@ -3686,7 +3686,7 @@ https://github.com/grafi-tt/lunaJson
 						or answer:match('"microformat".-"title":"([^"]+)')
 						or 'title - not found'
 			header = title_clean(header)
-			if inAdr:match('list=LM') then
+			if m_simpleTV.User.YT.isAuth and inAdr:match('list=LM') then
 				header = header .. ' 🎵'
 			end
 			m_simpleTV.User.YT.Plst = tab
