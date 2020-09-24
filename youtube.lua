@@ -875,39 +875,29 @@ https://github.com/grafi-tt/lunaJson
 	 return decode
 	end
 	local function GetApiKey()
-		local sessionApiKey = m_simpleTV.Http.New(userAgent_2)
-			if not sessionApiKey then return end
-		m_simpleTV.Http.SetTimeout(sessionApiKey, 12000)
-			local function checkApiKey(key, headers)
-					if not key or not headers then return end
-				local url = string.format('https://www.googleapis.com/youtube/v3/i18nLanguages?part=snippet&fields=kind&key=%s', key)
-				local rc = m_simpleTV.Http.Request(sessionApiKey, {url = url, headers = headers})
-					if rc ~= 200 then return end
-			 return true
-			end
+		local headers = decode64('UmVmZXJlcjogaHR0cHM6Ly93d3cueW91dHViZS5jb20vdHY')
 			local function webApiKey()
-				local headers = decode64('UmVmZXJlcjogaHR0cHM6Ly93d3cueW91dHViZS5jb20vdHYv')
+				local session = m_simpleTV.Http.New(userAgent_2)
+					if not session then return end
+				m_simpleTV.Http.SetTimeout(session, 12000)
 				local url = decode64('aHR0cHM6Ly93d3cueW91dHViZS5jb20vdHY')
-				local rc, answer = m_simpleTV.Http.Request(sessionApiKey, {url = url, headers = headers})
+				local rc, answer = m_simpleTV.Http.Request(session, {url = url})
 					if rc ~= 200 then return end
-				url = answer:match('<script id="base%-js" src="([^"]+)')
+				url = answer:match('"base%-js" src="([^"]+)')
 					if not url then return end
-				url = url:gsub('m=base', 'm=main')
+				url = url:gsub('m=base$', 'm=main')
+				url = url:gsub('/dg=0/', '/exm=base/ed=1/')
 				url = url:gsub('^/', 'https://www.youtube.com/')
-				rc, answer = m_simpleTV.Http.Request(sessionApiKey, {url = url, headers = headers})
+				rc, answer = m_simpleTV.Http.Request(session, {url = url})
+				m_simpleTV.Http.Close(session)
 					if rc ~= 200 then return end
-		 	 return answer:match('apiaryApiKey:%s*"([^"]+)'), headers
+		 	 return answer:match('apiaryApiKey:"([^"]+)')
 			end
-		local key, headers = webApiKey()
-		if not checkApiKey(key, headers) then
-			key = ''
-			headers = ''
-				if not checkApiKey(key, headers) then
-					m_simpleTV.OSD.ShowMessageT({text = 'YouTube - API Key not valid', showTime = 3000, id = 'channelName'})
-					m_simpleTV.Common.Sleep(2000)
-				end
+		local key = webApiKey() or webApiKey()
+		if not key then
+			m_simpleTV.OSD.ShowMessageT({text = 'YouTube: API Key not found', showTime = 3000, id = 'channelName'})
+			m_simpleTV.Common.Sleep(2000)
 		end
-		m_simpleTV.Http.Close(sessionApiKey)
 		m_simpleTV.User.YT.apiKey = key
 		m_simpleTV.User.YT.apiKeyHeader = headers
 	end
@@ -1396,7 +1386,7 @@ https://github.com/grafi-tt/lunaJson
 	local function GetUrlWatchVideos(url)
 		local session = m_simpleTV.Http.New(userAgent, nil, true)
 			if not session then return end
-		m_simpleTV.Http.SetTimeout(session, 8000)
+		m_simpleTV.Http.SetTimeout(session, 12000)
 		m_simpleTV.Http.SetRedirectAllow(session, false)
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		m_simpleTV.Http.Request(session, {url = url})
@@ -1534,7 +1524,7 @@ https://github.com/grafi-tt/lunaJson
 	local function GetSignScr()
 		local sessionGetSignScr = m_simpleTV.Http.New(userAgent_2)
 			if not sessionGetSignScr then return end
-		m_simpleTV.Http.SetTimeout(sessionGetSignScr, 8000)
+		m_simpleTV.Http.SetTimeout(sessionGetSignScr, 12000)
 		local adr = 'https://www.youtube.com/embed/' .. m_simpleTV.User.YT.vId
 		m_simpleTV.Http.SetCookies(sessionGetSignScr, adr, m_simpleTV.User.YT.cookies, '')
 		local rc, answer = m_simpleTV.Http.Request(sessionGetSignScr, {url = adr})
@@ -1689,7 +1679,7 @@ https://github.com/grafi-tt/lunaJson
 			if not session then
 			 return url
 			end
-		m_simpleTV.Http.SetTimeout(session, 8000)
+		m_simpleTV.Http.SetTimeout(session, 12000)
 		m_simpleTV.Http.Request(session, {url = url:gsub('$.+',''), method = 'head'})
 		local raw = m_simpleTV.Http.GetRawHeader(session)
 		m_simpleTV.Http.Close(session)
@@ -1756,7 +1746,7 @@ https://github.com/grafi-tt/lunaJson
 			if not session then
 			 return nil, 'GetStreamsTab session error 1'
 			end
-		m_simpleTV.Http.SetTimeout(session, 8000)
+		m_simpleTV.Http.SetTimeout(session, 12000)
 		if not m_simpleTV.User.YT.signScr then
 			GetSignScr()
 		end
@@ -2479,9 +2469,12 @@ https://github.com/grafi-tt/lunaJson
 			 return ret
 			end
 		if params.User.First == true then
-			local token = answer:match('"ID_TOKEN":"([^"]+)') or ''
-			params.User.headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200918.05.01'
-									.. '\nX-Youtube-Identity-Token: ' .. token
+			local token
+			if not params.User.isVideos then
+				token = answer:match('"ID_TOKEN":"([^"]+)')
+			end
+			params.User.headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200923.01.00'
+									.. '\nX-Youtube-Identity-Token: ' .. (token or '')
 			params.User.First = false
 			params.User.Title = answer:match('MetadataRenderer":{"title":"([^"]+)') or '???'
 			params.User.Title = title_clean(params.User.Title)
@@ -2783,7 +2776,7 @@ https://github.com/grafi-tt/lunaJson
 			or inAdr:match('/shared%?ci=')
 			or inAdr:match('list=LL')
 			or inAdr:match('list=LM')
-			or inAdr:match('/feed/channels'))
+			or inAdr:match('/feed/'))
 		then
 			local err = '⚠️ ' .. m_simpleTV.User.YT.Lng.noCookies
 			StopOnErr(100, err)
@@ -3497,9 +3490,12 @@ https://github.com/grafi-tt/lunaJson
 		params.ProgressColor = 0x80FF0000
 		params.User = {}
 		params.User.tab = {}
-		params.delayedShow = 1500
+		params.delayedShow = 1800
 		params.User.Title = ''
 		params.User.First = true
+		if inAdr:match('/videos') then
+			params.User.isVideos = true
+		end
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		asynPlsLoaderHelper.Work(session, t0, params)
 		local header = params.User.Title
