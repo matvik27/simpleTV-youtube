@@ -164,7 +164,7 @@ local infoInFile = false
 	m_simpleTV.Control.ChangeAddress = 'Yes'
 	m_simpleTV.Control.CurrentAddress = 'error'
 	local userAgent = 'Mozilla/5.0 (Windows NT 10.0; rv:81.0) Gecko/20100101 Firefox/81.0'
-	local userAgent_2 = 'Mozilla/5.0 (SMART-TV; Linux; Tizen 4.0.0.2) AppleWebkit/605.1.15 (KHTML, like Gecko) SamsungBrowser/9.2 TV Safari/605.1.15'
+	local userAgent2 = 'Mozilla/5.0 (SMART-TV; Linux; Tizen 4.0.0.2) AppleWebkit/605.1.15 (KHTML, like Gecko) SamsungBrowser/9.2 TV Safari/605.1.15'
 	local session = m_simpleTV.Http.New(userAgent)
 		if not session then return end
 	m_simpleTV.Http.SetTimeout(session, 12000)
@@ -447,6 +447,10 @@ local infoInFile = false
 	end
 	if m_simpleTV.User.YT.isChPlst then
 		m_simpleTV.User.YT.isChPlst = nil
+	end
+	local function ShowMessage(m, id)
+		id = id or 'channelName'
+		m_simpleTV.OSD.ShowMessageT({text = m, color = 0xFF8080FF, showTime = 1000 * 5, id = id})
 	end
 	local function lunaJson_decode(json_, pos_, nullv_, arraylen_)
 --[[The MIT License (MIT)
@@ -875,31 +879,23 @@ https://github.com/grafi-tt/lunaJson
 	 return decode
 	end
 	local function GetApiKey()
-		local headers = decode64('UmVmZXJlcjogaHR0cHM6Ly93d3cueW91dHViZS5jb20vdHY')
 			local function webApiKey()
-				local session = m_simpleTV.Http.New(userAgent_2)
+				local session = m_simpleTV.Http.New(userAgent2)
 					if not session then return end
 				m_simpleTV.Http.SetTimeout(session, 12000)
-				local url = decode64('aHR0cHM6Ly93d3cueW91dHViZS5jb20vdHY')
+				local url = decode64('aHR0cHM6Ly93d3cueW91dHViZS5jb20vcy9fL2thYnVraV9sZWdhY3kvXy9qcy9rPWthYnVraV9sZWdhY3kuYmFzZS5lbl9VUy5YVm9Dd2t6QjJ4TS5PL2FtPUVnL3J0PWovZD0xL2V4bT1iYXNlL2VkPTEvY3Q9emdtcy9ycz1BTmpSaFZsUXRsUHY5RmJyTVg4MW9WWEI0ZDVLWXoycUxRL209bWFpbg')
 				local rc, answer = m_simpleTV.Http.Request(session, {url = url})
-					if rc ~= 200 then return end
-				url = answer:match('"base%-js" src="([^"]+)')
-					if not url then return end
-				url = url:gsub('m=base$', 'm=main')
-				url = url:gsub('/dg=0/', '/exm=base/ed=1/')
-				url = url:gsub('^/', 'https://www.youtube.com/')
-				rc, answer = m_simpleTV.Http.Request(session, {url = url})
 				m_simpleTV.Http.Close(session)
 					if rc ~= 200 then return end
 		 	 return answer:match('apiaryApiKey:"([^"]+)')
 			end
-		local key = webApiKey() or webApiKey()
+		local key = webApiKey()
 		if not key then
-			m_simpleTV.OSD.ShowMessageT({text = 'YouTube: API Key not found', showTime = 3000, id = 'channelName'})
+			ShowMessage('YouTube: API Key not found')
 			m_simpleTV.Common.Sleep(2000)
 		end
-		m_simpleTV.User.YT.apiKey = key
-		m_simpleTV.User.YT.apiKeyHeader = headers
+		m_simpleTV.User.YT.apiKey = key or decode64('QUl6YVN5QUtpVExVX1E1R3ZNZDZfZXU0Q1ZybVhhOHVKckJyUFd3')
+		m_simpleTV.User.YT.apiKeyHeader = decode64('UmVmZXJlcjogaHR0cHM6Ly93d3cueW91dHViZS5jb20vdHY')
 	end
 	local function split_str(source, delimiters)
 		local elements = {}
@@ -1008,10 +1004,6 @@ https://github.com/grafi-tt/lunaJson
 		end
 		desc = string.format('<html><body bgcolor="#101013"><table width="99%%"><tr><td style="padding: 10px 10px 10px;"><a href="%s"><img src="%s"</a></td><td style="padding: 10px 10px 10px; color:#ebebeb; vertical-align:middle;"><h4><font color="#ebeb00">%s</h4><hr>%s%s</td></tr></table></body></html>', adr, logo, name, link, desc)
 	 return desc
-	end
-	local function ShowMessage(m, id)
-		id = id or 'channelName'
-		m_simpleTV.OSD.ShowMessageT({text = m, color = 0xFF8080FF, showTime = 1000 * 5, id = id})
 	end
 	local function ShowInfo(info, bcolor, txtparm, color)
 			local function datScr()
@@ -1522,7 +1514,7 @@ https://github.com/grafi-tt/lunaJson
 	 return url
 	end
 	local function GetSignScr()
-		local sessionGetSignScr = m_simpleTV.Http.New(userAgent_2)
+		local sessionGetSignScr = m_simpleTV.Http.New(userAgent2)
 			if not sessionGetSignScr then return end
 		m_simpleTV.Http.SetTimeout(sessionGetSignScr, 12000)
 		local adr = 'https://www.youtube.com/embed/' .. m_simpleTV.User.YT.vId
@@ -1742,7 +1734,7 @@ https://github.com/grafi-tt/lunaJson
 			 return
 			end
 		local sTime = sTime()
-		local session = m_simpleTV.Http.New(userAgent_2)
+		local session = m_simpleTV.Http.New(userAgent2)
 			if not session then
 			 return nil, 'GetStreamsTab session error 1'
 			end
@@ -1775,7 +1767,7 @@ https://github.com/grafi-tt/lunaJson
 		if not answer:match('status%%22%%3A%%22OK') then
 			if m_simpleTV.User.YT.isAuth then
 				m_simpleTV.Http.Close(session)
-				session = m_simpleTV.Http.New(userAgent_2)
+				session = m_simpleTV.Http.New(userAgent2)
 					if not session then
 					 return nil, 'GetStreamsTab session error 2'
 					end
