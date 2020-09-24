@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (23/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (24/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -177,6 +177,7 @@ local infoInFile = false
 	local isJsDecode = false
 	local isVideo = true
 	local isPlst = false
+	local isPlst2 = false
 	local isChPlst = false
 	local isChVideos = false
 	local isInfoPanel = true
@@ -2478,6 +2479,9 @@ https://github.com/grafi-tt/lunaJson
 			 return ret
 			end
 		if params.User.First == true then
+			local token = answer:match('"ID_TOKEN":"([^"]+)') or ''
+			params.User.headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200918.05.01'
+									.. '\nX-Youtube-Identity-Token: ' .. token
 			params.User.First = false
 			params.User.Title = answer:match('MetadataRenderer":{"title":"([^"]+)') or '???'
 			params.User.Title = title_clean(params.User.Title)
@@ -2487,19 +2491,14 @@ https://github.com/grafi-tt/lunaJson
 				ret.Done = true
 			 return ret
 			end
-		local nextContinuationData = answer:match('"nextContinuationData"(.-)$')
-			if not nextContinuationData then
-				ret.Done = true
-			 return ret
-			end
-		local continuation, itct = nextContinuationData:match('"continuation":"([^"]+).-"clickTrackingParams":"([^"]+)')
+		local continuation, itct = answer:match('"continuation":"([^"]+).-"clickTrackingParams":"([^"]+)')
 			if not continuation or not itct then
 				ret.Done = true
 			 return ret
 			end
 		ret.request = {}
 		ret.request.url = string.format('https://www.youtube.com/browse_ajax?ctoken=%s&continuation=%s&itct=%s', continuation, continuation, itct)
-		ret.request.headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200918.05.01'
+		ret.request.headers = params.User.headers
 		ret.Count = #params.User.tab
 	 return ret
 	end
@@ -3113,13 +3112,22 @@ https://github.com/grafi-tt/lunaJson
 	if ((inAdr:match('list=RD')
 		or inAdr:match('list=TL'))
 		and not inAdr:match('/embed'))
-		or ((inAdr:match('list=WL')
+	then
+		inAdr = inAdr .. '&index=1'
+	end
+	if ((inAdr:match('list=WL')
 			or inAdr:match('list=OL')
 			or inAdr:match('list=LM')
 			or inAdr:match('list=LL'))
 			and not inAdr:match('index='))
 	then
-		inAdr = inAdr .. '&index=1'
+		if videoId == '' then
+			isChPlst = false
+			isChVideos = true
+			plstIndex = 1
+		else
+			inAdr = inAdr .. '&index=1'
+		end
 	end
 	if isChPlst then
 			if (m_simpleTV.Control.Reason == 'Stopped' or m_simpleTV.Control.Reason == 'EndReached')
@@ -3492,6 +3500,7 @@ https://github.com/grafi-tt/lunaJson
 		params.delayedShow = 1500
 		params.User.Title = ''
 		params.User.First = true
+		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		asynPlsLoaderHelper.Work(session, t0, params)
 		local header = params.User.Title
 		local tab = params.User.tab
@@ -3499,6 +3508,9 @@ https://github.com/grafi-tt/lunaJson
 				StopOnErr(1)
 			 return
 			end
+		if m_simpleTV.User.YT.isAuth and inAdr:match('list=LM') then
+			header = header .. ' 🎵'
+		end
 		m_simpleTV.User.YT.Plst = tab
 		m_simpleTV.User.YT.plstHeader = header
 		if m_simpleTV.User.paramScriptForSkin_buttonOptions then
@@ -3560,7 +3572,7 @@ https://github.com/grafi-tt/lunaJson
 		end
 		retAdr = retAdr or t[index].Address
 		m_simpleTV.User.YT.QltyIndex = index
-		retAdr = CheckUrl(retAdr, t,index)
+		retAdr = CheckUrl(retAdr, t, index)
 		m_simpleTV.Control.CurrentTitle_UTF8 = header
 		if not (#tab == 1 and m_simpleTV.User.YT.duration and m_simpleTV.User.YT.duration > 600) then
 			retAdr = retAdr .. '$OPT:POSITIONTOCONTINUE=0'
@@ -3767,7 +3779,7 @@ https://github.com/grafi-tt/lunaJson
 			retAdr = retAdr or t[index].Address
 			m_simpleTV.User.YT.QltyIndex = index
 			m_simpleTV.Control.CurrentTitle_UTF8 = header
-			retAdr = CheckUrl(retAdr, t,index)
+			retAdr = CheckUrl(retAdr, t, index)
 			m_simpleTV.User.YT.AddToBaseUrlinAdr = inAdr
 			plstPicId = tab[1].Address:match('watch%?v=([^&]+)')
 			m_simpleTV.User.YT.AddToBaseVideoIdPlst = plstPicId
@@ -3972,7 +3984,7 @@ https://github.com/grafi-tt/lunaJson
 			end
 			retAdr = retAdr or t[index].Address
 			m_simpleTV.User.YT.QltyIndex = index
-			retAdr = CheckUrl(retAdr, t,index)
+			retAdr = CheckUrl(retAdr, t, index)
 			local plstPicId
 			if plstId:match('^RD') then
 				local plstPicIdRD = plstId:gsub('^RD', '')
