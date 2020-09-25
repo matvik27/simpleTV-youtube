@@ -894,7 +894,7 @@ https://github.com/grafi-tt/lunaJson
 			ShowMessage('YouTube: API Key not found')
 			m_simpleTV.Common.Sleep(2000)
 		end
-		m_simpleTV.User.YT.apiKey = key or decode64('QUl6YVN5QUtpVExVX1E1R3ZNZDZfZXU0Q1ZybVhhOHVKckJyUFd3')
+		m_simpleTV.User.YT.apiKey = key or ''
 		m_simpleTV.User.YT.apiKeyHeader = decode64('UmVmZXJlcjogaHR0cHM6Ly93d3cueW91dHViZS5jb20vdHY')
 	end
 	local function split_str(source, delimiters)
