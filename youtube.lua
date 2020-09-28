@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (24/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (28/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -179,7 +179,7 @@ local infoInFile = false
 	local isPlst = false
 	local isPlst2 = false
 	local isChPlst = false
-	local isChVideos = false
+	local isPlstVideos = false
 	local isInfoPanel = true
 	local videoId = inAdr:match('[%?&/]v[=/](.+)')
 				or inAdr:match('/embed/(.+)')
@@ -2378,7 +2378,7 @@ https://github.com/grafi-tt/lunaJson
 		local i = #tab + 1
 		local ret = false
 		str = str:gsub('\\"', '%%22')
-			for c in str:gmatch('VideoRenderer".-thumbnailOverlayNowPlayingRenderer') do
+			for c in str:gmatch('ideoRenderer".-"thumbnailOverlayNowPlayingRenderer"') do
 				local name = c:match('"title":{"runs":%[{"text":"([^"]+)') or c:match('"simpleText":"([^"]+)')
 				local adr = c:match('"videoId":"([^"]+)')
 				local times = c:match('"thumbnailOverlayTimeStatusRenderer".-"simpleText":"([^"]+)')
@@ -2397,7 +2397,7 @@ https://github.com/grafi-tt/lunaJson
 							times = m_simpleTV.User.YT.Lng.live
 							tab[i].Name = string.format('%s (%s)', name, times)
 						end
-						local count = c:match('"shortViewCountText":{"simpleText":"([^"]+)')
+						local count = c:match('iewCountText":{"simpleText":"([^"]+)')
 						local publis = c:match('"publishedTimeText":{"simpleText":"([^"]+)')
 						if count and publis then
 							count = publis .. ' ◽ ' .. count
@@ -2462,13 +2462,17 @@ https://github.com/grafi-tt/lunaJson
 			end
 		if params.User.First == true then
 			local token
-			if not params.User.isVideos then
+			if not params.User.videos then
 				token = answer:match('"ID_TOKEN":"([^"]+)')
 			end
 			params.User.headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200923.01.00'
 									.. '\nX-Youtube-Identity-Token: ' .. (token or '')
 			params.User.First = false
-			params.User.Title = answer:match('MetadataRenderer":{"title":"([^"]+)') or '???'
+			params.User.Title = answer:match('MetadataRenderer":{"title":"([^"]+)')
+								or answer:match('"subFeedOptionRenderer":{"name":{"runs":%[{"text":"([^"]+)')
+								or answer:match('HeaderRenderer":{"title":{"simpleText":"([^"]+)')
+								or answer:match('HeaderRenderer":{"title":{"runs":%[{"text":"([^"]+)')
+								or '???'
 			params.User.Title = title_clean(params.User.Title)
 			m_simpleTV.Control.SetTitle(params.User.Title)
 		end
@@ -2923,9 +2927,10 @@ https://github.com/grafi-tt/lunaJson
 	if inAdr:match('/user/.-/videos')
 		or inAdr:match('/channel/.-/videos')
 		or inAdr:match('/c/.-/videos')
+		or inAdr:match('/feed/')
 			then
 				isChPlst = false
-				isChVideos = true
+				isPlstVideos = true
 				plstIndex = 1
 	elseif inAdr:match('/user/.-$')
 		or inAdr:match('/channel/.-$')
@@ -2936,12 +2941,12 @@ https://github.com/grafi-tt/lunaJson
 		or inAdr:match('/embed/live_stream%?')
 			then
 				isChPlst = true
-				isChVideos = false
+				isPlstVideos = false
 				plstIndex = 1
 	elseif inAdr:match('youtube%.com/%w+/videos')
 			then
 				isChPlst = false
-				isChVideos = true
+				isPlstVideos = true
 				plstIndex = 1
 	end
 	if inAdr:match('/feeds/videos%.xml') then
@@ -3108,7 +3113,7 @@ https://github.com/grafi-tt/lunaJson
 	then
 		if videoId == '' then
 			isChPlst = false
-			isChVideos = true
+			isPlstVideos = true
 			plstIndex = 1
 		else
 			inAdr = inAdr .. '&index=1'
@@ -3466,7 +3471,7 @@ https://github.com/grafi-tt/lunaJson
 			 return
 			end
 	end
-	if isChVideos then
+	if isPlstVideos then
 		m_simpleTV.Control.ExecuteAction(37)
 		if not m_simpleTV.User.YT.isChPlst then
 			m_simpleTV.User.YT.ChTitleForSave = nil
@@ -3486,7 +3491,7 @@ https://github.com/grafi-tt/lunaJson
 		params.User.Title = ''
 		params.User.First = true
 		if inAdr:match('/videos') then
-			params.User.isVideos = true
+			params.User.videos = true
 		end
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		asynPlsLoaderHelper.Work(session, t0, params)
