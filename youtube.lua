@@ -170,14 +170,13 @@ local infoInFile = false
 	m_simpleTV.Http.SetTimeout(session, 12000)
 	m_simpleTV.User.YT.DelayedAddress = nil
 	m_simpleTV.User.YT.isChapters = false
-	local info_0
+	local inf0
 	local plstId
 	local plstIndex
 	local plstPos
 	local isJsDecode = false
 	local isVideo = true
 	local isPlst = false
-	local isPlst2 = false
 	local isChPlst = false
 	local isPlstVideos = false
 	local isInfoPanel = true
@@ -1750,11 +1749,11 @@ https://github.com/grafi-tt/lunaJson
 				.. '&video_id='
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		if infoInFile then
-			info_0 = os.clock()
+			inf0 = os.clock()
 		end
 		local rc, answer = m_simpleTV.Http.Request(session, {url = url .. m_simpleTV.User.YT.vId})
 		if infoInFile then
-			info_0 = string.format('%.3f', (os.clock() - info_0))
+			inf0 = string.format('%.3f', (os.clock() - inf0))
 		end
 		answer = answer or ''
 		local trailer = answer:match('trailerVideoId%%22%%3A%%22(.-)%%22')
@@ -4195,7 +4194,7 @@ https://github.com/grafi-tt/lunaJson
 		m_simpleTV.Control.CurrentAddress = retAdr
 		if infoInFile then
 			local scr_time = string.format('%.3f', (os.clock() - infoInFile))
-			local calc = scr_time - info_0
+			local calc = scr_time - inf0
 			local adr = m_simpleTV.Common.fromPercentEncoding(retAdr)
 			local string_rep = string.rep('–', 70) .. '\n'
 			infoInFile = '\n'
@@ -4209,7 +4208,7 @@ https://github.com/grafi-tt/lunaJson
 						.. ' | "jsdecode" used: ' .. tostring(isJsDecode) .. '\n'
 						.. string_rep
 						.. 'time: ' .. scr_time .. ' s.'
-						.. ' | request: ' .. info_0 .. ' s.'
+						.. ' | request: ' .. inf0 .. ' s.'
 						.. ' | calc: ' .. calc .. ' s.\n'
 						.. string_rep
 						.. 'title: ' .. title:gsub('%c', ' ') .. '\n'
