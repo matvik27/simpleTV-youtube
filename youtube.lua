@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (2/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (3/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -2476,12 +2476,15 @@ https://github.com/grafi-tt/lunaJson
 								or '???'
 			params.User.Title = title_clean(params.User.Title)
 			m_simpleTV.Control.SetTitle(params.User.Title)
-			end
+		end
 			if not AddInPl_Videos_YT(answer, params.User.tab) then
 				ret.Done = true
 			 return ret
 			end
 		local continuation, itct = answer:match('"continuation":"([^"]+).-"clickTrackingParams":"([^"]+)')
+		if not continuation or not itct then
+			itct, continuation = answer:match('"continuationEndpoint":{"clickTrackingParams":"([^"]+).-"continuationCommand":{"token":"([^"]+)')
+		end
 			if not continuation or not itct then
 				ret.Done = true
 			 return ret
@@ -3489,7 +3492,7 @@ https://github.com/grafi-tt/lunaJson
 		params.ProgressColor = 0x80FF0000
 		params.User = {}
 		params.User.tab = {}
-		params.delayedShow = 1800
+		params.delayedShow = 2000
 		params.User.Title = ''
 		params.User.First = true
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
