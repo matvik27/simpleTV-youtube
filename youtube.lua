@@ -2408,10 +2408,16 @@ https://github.com/grafi-tt/lunaJson
 						else
 							count = ''
 						end
+						local channel = c:match('"shortBylineText":{"runs":%[{"text":"([^"]+)')
+						if channel then
+							channel = ' | ' .. title_clean(channel)
+						else
+							channel = ''
+						end
 						tab[i].InfoPanelLogo = string.format('https://i.ytimg.com/vi/%s/default.jpg', adr)
 						tab[i].InfoPanelName = name
 						tab[i].InfoPanelDesc = desc_html(nil, tab[i].InfoPanelLogo, name, tab[i].Address)
-						tab[i].InfoPanelTitle = string.format('%s | %s', count, times)
+						tab[i].InfoPanelTitle = string.format('%s%s | %s', count, channel, times)
 						tab[i].InfoPanelShowTime = 10000
 					end
 					i = i + 1
@@ -2470,7 +2476,7 @@ https://github.com/grafi-tt/lunaJson
 								or '???'
 			params.User.Title = title_clean(params.User.Title)
 			m_simpleTV.Control.SetTitle(params.User.Title)
-		end
+			end
 			if not AddInPl_Videos_YT(answer, params.User.tab) then
 				ret.Done = true
 			 return ret
