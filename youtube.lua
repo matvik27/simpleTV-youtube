@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (28/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (2/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,9 +11,9 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
 ]]
--- https://github.com/Nexterr/simpleTV.youtube
+-- https://github.com/Nexterr
 -- использовались скрипты http://iptv.gen12.net/bugtracker/view.php?id=986
--- UTF-8 w/o BOM
+-- UTF-8 without BOM
 -- поиск из окна "Открыть URL" (Ctrl+N), префиксы: - (видео), -- (плейлисты), --- (каналы), -+ (прямые трансляции)
 -- авторизаця: файл формата "Netscape HTTP Cookie File" - cookies.txt поместить в папку 'work' (https://addons.mozilla.org/en-US/firefox/addon/cookies-txt )
 -- показать на OSD плейлист / выбор качества: Ctrl+M
@@ -2453,19 +2453,15 @@ https://github.com/grafi-tt/lunaJson
 	 return ret
 	end
 	function AsynPlsCallb_Videos_YT(session, rc, answer, userstring, params)
-		answer = answer:gsub('\\"', '%%22')
 		local ret = {}
 			if rc ~= 200 then
 				ret.Cancel = true
 			 return ret
 			end
+		answer = answer:gsub('\\"', '%%22')
 		if params.User.First == true then
-			local token
-			if not params.User.videos then
-				token = answer:match('"ID_TOKEN":"([^"]+)')
-			end
 			params.User.headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200923.01.00'
-									.. '\nX-Youtube-Identity-Token: ' .. (token or '')
+									.. '\nX-Youtube-Identity-Token: ' .. (answer:match('"ID_TOKEN":"([^"]+)') or '')
 			params.User.First = false
 			params.User.Title = answer:match('MetadataRenderer":{"title":"([^"]+)')
 								or answer:match('"subFeedOptionRenderer":{"name":{"runs":%[{"text":"([^"]+)')
@@ -2486,6 +2482,7 @@ https://github.com/grafi-tt/lunaJson
 			end
 		ret.request = {}
 		ret.request.url = string.format('https://www.youtube.com/browse_ajax?ctoken=%s&continuation=%s&itct=%s', continuation, continuation, itct)
+		m_simpleTV.Http.SetCookies(session, ret.request.url, m_simpleTV.User.YT.cookies, '')
 		ret.request.headers = params.User.headers
 		ret.Count = #params.User.tab
 	 return ret
@@ -3489,9 +3486,6 @@ https://github.com/grafi-tt/lunaJson
 		params.delayedShow = 1800
 		params.User.Title = ''
 		params.User.First = true
-		if inAdr:match('/videos') then
-			params.User.videos = true
-		end
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		asynPlsLoaderHelper.Work(session, t0, params)
 		local header = params.User.Title
