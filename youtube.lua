@@ -133,7 +133,7 @@ local infoInFile = false
 				or inAdr:match('/channel/')
 				or inAdr:match('/user/')
 				or inAdr:match('isChPlst=true')
-				or inAdr:match('isPlst=true')
+				or inAdr:match('&isPlst=')
 				or inAdr:match('isLogo=false')
 				or inAdr:match('browse_ajax')
 				or inAdr:match('&restart'))
@@ -145,7 +145,7 @@ local infoInFile = false
 		if m_simpleTV.Control.MainMode == 0 then
 			m_simpleTV.Interface.SetBackground({BackColor = 0, PictFileName = m_simpleTV.User.YT.logoDisk, TypeBackColor = 0, UseLogo = 3, Once = 1, Blur = 1})
 		end
-	elseif inAdr:match('isPlst=true') or inAdr:match('isLogo=false') then
+	elseif inAdr:match('&isPlst=') or inAdr:match('isLogo=false') then
 		if m_simpleTV.Control.MainMode == 0 then
 			m_simpleTV.Interface.SetBackground({BackColor = 0, PictFileName = '', TypeBackColor = 0, UseLogo = 0, Once = 1})
 		end
@@ -169,6 +169,7 @@ local infoInFile = false
 		if not session then return end
 	m_simpleTV.Http.SetTimeout(session, 12000)
 	m_simpleTV.User.YT.DelayedAddress = nil
+	m_simpleTV.User.YT.isPlstHistory = nil
 	m_simpleTV.User.YT.isChapters = false
 	local inf0
 	local plstId
@@ -1478,7 +1479,7 @@ https://github.com/grafi-tt/lunaJson
 		end
 	end
 	local function MarkWatch_YT()
-		if m_simpleTV.User.YT.videostats then
+		if m_simpleTV.User.YT.videostats and not inAdr:match('&isPlst=history') then
 			local sessionMarkWatch = m_simpleTV.Http.New(userAgent)
 				if not sessionMarkWatch then return end
 			local cpn_alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_'
@@ -1816,7 +1817,7 @@ https://github.com/grafi-tt/lunaJson
 				and tab.multicamera.playerLegacyMulticameraRenderer
 				and tab.multicamera.playerLegacyMulticameraRenderer.metadataList
 				and not inAdr:match('&restart')
-				and not inAdr:match('&isPlst=true')
+				and not inAdr:match('&isPlst=')
 				and not inAdr:match('list=')
 			then
 				local t, i = {}, 1
@@ -2385,7 +2386,8 @@ https://github.com/grafi-tt/lunaJson
 					name = title_clean(name)
 					tab[i] = {}
 					tab[i].Id = i
-					tab[i].Address = string.format('https://www.youtube.com/watch?v=%s&isPlst=true', adr)
+					local isPlst = m_simpleTV.User.YT.isPlstHistory or 'true'
+					tab[i].Address = string.format('https://www.youtube.com/watch?v=%s&isPlst=' .. isPlst, adr)
 					if isInfoPanel == false then
 						times = times or m_simpleTV.User.YT.Lng.live
 						tab[i].Name = string.format('%s (%s)', name, times)
@@ -2553,7 +2555,7 @@ https://github.com/grafi-tt/lunaJson
 				for i = 1, #t do
 					name = t[i].Name
 					logo = t[i].Address:match('v=([^&]*)') or ''
-					adr = t[i].Address:gsub('&isPlst=true', '')
+					adr = t[i].Address:gsub('&isPlst=%a+', '')
 					m3ustr = m3ustr
 							.. '#EXTINF:-1'
 							.. ' group-title="' .. header .. '"'
@@ -2926,7 +2928,7 @@ https://github.com/grafi-tt/lunaJson
 		m_simpleTV.Control.PlayAddressT({address = tab[id].Address})
 	 return
 	end
-	if inAdr:match('isPlst=true') then
+	if inAdr:match('&isPlst=') then
 		isVideo = false
 	end
 	if inAdr:match('/user/.-/videos')
@@ -3495,6 +3497,9 @@ https://github.com/grafi-tt/lunaJson
 		params.delayedShow = 2000
 		params.User.Title = ''
 		params.User.First = true
+		if url:match('/feed/history') then
+			m_simpleTV.User.YT.isPlstHistory = 'history'
+		end
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		asynPlsLoaderHelper.Work(session, t0, params)
 		local header = params.User.Title
