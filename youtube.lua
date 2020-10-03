@@ -169,7 +169,6 @@ local infoInFile = false
 		if not session then return end
 	m_simpleTV.Http.SetTimeout(session, 12000)
 	m_simpleTV.User.YT.DelayedAddress = nil
-	m_simpleTV.User.YT.isPlstHistory = nil
 	m_simpleTV.User.YT.isChapters = false
 	local inf0
 	local plstId
@@ -2374,9 +2373,10 @@ https://github.com/grafi-tt/lunaJson
 		end
 	 return t, title
 	end
-	local function AddInPl_Videos_YT(str, tab)
+	local function AddInPl_Videos_YT(str, tab, typePlst)
 		local i = #tab + 1
 		local ret = false
+		typePlst = typePlst or 'true'
 		str = str:gsub('\\"', '%%22')
 			for c in str:gmatch('ideoRenderer".-"thumbnailOverlayNowPlayingRenderer"') do
 				local name = c:match('"title":{"runs":%[{"text":"([^"]+)') or c:match('"simpleText":"([^"]+)')
@@ -2386,8 +2386,7 @@ https://github.com/grafi-tt/lunaJson
 					name = title_clean(name)
 					tab[i] = {}
 					tab[i].Id = i
-					local isPlst = m_simpleTV.User.YT.isPlstHistory or 'true'
-					tab[i].Address = string.format('https://www.youtube.com/watch?v=%s&isPlst=' .. isPlst, adr)
+					tab[i].Address = string.format('https://www.youtube.com/watch?v=%s&isPlst=' .. typePlst, adr)
 					if isInfoPanel == false then
 						times = times or m_simpleTV.User.YT.Lng.live
 						tab[i].Name = string.format('%s (%s)', name, times)
@@ -2479,7 +2478,7 @@ https://github.com/grafi-tt/lunaJson
 			params.User.Title = title_clean(params.User.Title)
 			m_simpleTV.Control.SetTitle(params.User.Title)
 		end
-			if not AddInPl_Videos_YT(answer, params.User.tab) then
+			if not AddInPl_Videos_YT(answer, params.User.tab, params.User.typePlst) then
 				ret.Done = true
 			 return ret
 			end
@@ -3498,7 +3497,7 @@ https://github.com/grafi-tt/lunaJson
 		params.User.Title = ''
 		params.User.First = true
 		if url:match('/feed/history') then
-			m_simpleTV.User.YT.isPlstHistory = 'history'
+			params.User.typePlst = 'history'
 		end
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		asynPlsLoaderHelper.Work(session, t0, params)
