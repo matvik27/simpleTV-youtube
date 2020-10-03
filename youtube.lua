@@ -2265,12 +2265,12 @@ https://github.com/grafi-tt/lunaJson
 			for _, v in pairs(sort_video) do
 				if v.qlty > 300 then
 					if v.isAdaptive == true and audioAdr then
-						t[u] = v
-						if v.qlty > 1080 and opt_3xx then
+						if m_simpleTV.Common.GetVlcVersion() > 3000
+							and (v.qlty > 1080 or m_simpleTV.User.YT.isTrailer)
+						then
 							opt_3xx_demux_avcodec = '$OPT:demux=avcodec,any'
-						else
-							opt_3xx_demux_avcodec = nil
 						end
+						t[u] = v
 						t[u].Address = GetAdr(v.Address, v.isCipher)
 									.. (sTime or '')
 									.. opt_3xx
