@@ -2378,7 +2378,7 @@ https://github.com/grafi-tt/lunaJson
 		local ret = false
 		typePlst = typePlst or 'true'
 		str = str:gsub('\\"', '%%22')
-			for c in str:gmatch('ideoRenderer".-"thumbnailOverlayNowPlayingRenderer"') do
+			for c in str:gmatch('[eod]Renderer".-"thumbnailOverlayNowPlayingRenderer"') do
 				local name = c:match('"title":{"runs":%[{"text":"([^"]+)') or c:match('"simpleText":"([^"]+)')
 				local adr = c:match('"videoId":"([^"]+)')
 				local times = c:match('"thumbnailOverlayTimeStatusRenderer".-"simpleText":"([^"]+)')
@@ -2474,7 +2474,8 @@ https://github.com/grafi-tt/lunaJson
 								or answer:match('"subFeedOptionRenderer":{"name":{"runs":%[{"text":"([^"]+)')
 								or answer:match('HeaderRenderer":{"title":{"simpleText":"([^"]+)')
 								or answer:match('HeaderRenderer":{"title":{"runs":%[{"text":"([^"]+)')
-								or '???'
+								or answer:match('shelfRenderer":{"title":{"simpleText":"([^"]+)')
+								or 'title'
 			params.User.Title = title_clean(params.User.Title)
 			m_simpleTV.Control.SetTitle(params.User.Title)
 		end
