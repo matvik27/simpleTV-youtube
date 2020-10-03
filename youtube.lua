@@ -2474,7 +2474,7 @@ https://github.com/grafi-tt/lunaJson
 								or answer:match('"subFeedOptionRenderer":{"name":{"runs":%[{"text":"([^"]+)')
 								or answer:match('HeaderRenderer":{"title":{"simpleText":"([^"]+)')
 								or answer:match('HeaderRenderer":{"title":{"runs":%[{"text":"([^"]+)')
-								or answer:match('shelfRenderer":{"title":{"simpleText":"([^"]+)')
+								or answer:match('HeaderRenderer":{"title":"([^"]+)')
 								or 'title'
 			params.User.Title = title_clean(params.User.Title)
 			m_simpleTV.Control.SetTitle(params.User.Title)
