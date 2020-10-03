@@ -3,5 +3,5 @@
 --------------------------------------------------------------------- 
 - no subtitles available for resolution over 1080p or on YT preview
 ---------------------------------------------------------------------
-- the script is not compatible with videotracks addon
+- not compatible with videotracks addon
 ---------------------------------------------------------------------
