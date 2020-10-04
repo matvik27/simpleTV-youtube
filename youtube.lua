@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (3/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (4/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -11,7 +11,7 @@
 	See the License for the specific language governing permissions and
 	limitations under the License.
 ]]
--- https://github.com/Nexterr
+-- https://github.com/Nexterr/simpleTV.youtube
 -- использовались скрипты http://iptv.gen12.net/bugtracker/view.php?id=986
 -- UTF-8 without BOM
 -- поиск из окна "Открыть URL" (Ctrl+N), префиксы: - (видео), -- (плейлисты), --- (каналы), -+ (прямые трансляции)
@@ -2376,12 +2376,56 @@ https://github.com/grafi-tt/lunaJson
 	local function AddInPl_Videos_YT(str, tab, typePlst)
 		local i = #tab + 1
 		local ret = false
-		typePlst = typePlst or 'true'
 		str = str:gsub('\\"', '%%22')
+		if typePlst == 'channels' then
+			local desc, count, count2, subCount, logo, name, adr
+			for g in str:gmatch('"channelRenderer".-"subscribeButton"') do
+				name = g:match('"simpleText":"([^"]+)')
+				adr = g:match('"channelId":"([^"]+)')
+				if name and adr then
+					tab[i] = {}
+					tab[i].Id = i
+					tab[i].Address = 'https://www.youtube.com/channel/' .. adr .. '&isLogo=false'
+					name = title_clean(name)
+					if isInfoPanel == false then
+						tab[i].Name = name
+					else
+						desc = g:match('"descriptionSnippet":{"runs":%[{"text":"([^"]+)')
+						count, count2 = g:match('"videoCountText":{"runs":%[{"text":"([^"]+)"},{"text":"([^"]+)')
+						subCount = g:match('"subscriberCountText":{"simpleText":"([^"]+)')
+						logo = g:match('"thumbnails":%[.-,{"url":"([^"]+)') or m_simpleTV.User.YT.logoDisk
+						logo = logo:gsub('^//', 'https://')
+						tab[i].Name = name
+						tab[i].InfoPanelLogo = logo
+						tab[i].InfoPanelShowTime = 10000
+						tab[i].InfoPanelName = m_simpleTV.User.YT.Lng.channel .. ': ' .. name
+						local panelDescName
+						if desc and desc ~= '' then
+							panelDescName = m_simpleTV.User.YT.Lng.desc .. ' | '
+						end
+						tab[i].InfoPanelDesc = desc_html(desc, logo, name, tab[i].Address)
+						count = (count or '') .. (count2 or '')
+						if subCount and subCount ~= '' then
+							if count and count ~= '' then
+								subCount = ' | ' .. subCount
+							end
+						else
+							subCount = nil
+						end
+						tab[i].InfoPanelTitle = (panelDescName or ' ')
+											.. (count or '')
+											.. (subCount or '')
+					end
+					i = i + 1
+					ret = true
+				end
+			end
+		else
+			local times, count, publis, channel, name, adr
 			for c in str:gmatch('[eod]Renderer".-"thumbnailOverlayNowPlayingRenderer"') do
-				local name = c:match('"title":{"runs":%[{"text":"([^"]+)') or c:match('"simpleText":"([^"]+)')
-				local adr = c:match('"videoId":"([^"]+)')
-				local times = c:match('"thumbnailOverlayTimeStatusRenderer".-"simpleText":"([^"]+)')
+				name = c:match('"title":{"runs":%[{"text":"([^"]+)') or c:match('"simpleText":"([^"]+)')
+				adr = c:match('"videoId":"([^"]+)')
+				times = c:match('"thumbnailOverlayTimeStatusRenderer".-"simpleText":"([^"]+)')
 				if name and adr then
 					name = title_clean(name)
 					tab[i] = {}
@@ -2397,8 +2441,8 @@ https://github.com/grafi-tt/lunaJson
 							times = m_simpleTV.User.YT.Lng.live
 							tab[i].Name = string.format('%s (%s)', name, times)
 						end
-						local count = c:match('iewCountText":{"simpleText":"([^"]+)')
-						local publis = c:match('"publishedTimeText":{"simpleText":"([^"]+)')
+						count = c:match('iewCountText":{"simpleText":"([^"]+)')
+						publis = c:match('"publishedTimeText":{"simpleText":"([^"]+)')
 						if count and publis then
 							count = publis .. ' ◽ ' .. count
 						else
@@ -2409,7 +2453,7 @@ https://github.com/grafi-tt/lunaJson
 						else
 							count = ''
 						end
-						local channel = c:match('"shortBylineText":{"runs":%[{"text":"([^"]+)')
+						channel = c:match('"shortBylineText":{"runs":%[{"text":"([^"]+)')
 						if channel then
 							channel = ' | ' .. title_clean(channel)
 						else
@@ -2425,6 +2469,7 @@ https://github.com/grafi-tt/lunaJson
 					ret = true
 				end
 			end
+		end
 	 return ret
 	end
 	local function AddInPl_Plst_YT(str, tab)
@@ -2842,90 +2887,6 @@ https://github.com/grafi-tt/lunaJson
 			end
 		t = t[id].Address .. '&isLogo=false&isLogo=false'
 		m_simpleTV.Control.PlayAddressT({address = t})
-	 return
-	end
-	if inAdr:match('/feed/channels') then
-		m_simpleTV.Http.SetCookies(session, inAdr, m_simpleTV.User.YT.cookies, '')
-		local rc, answer = m_simpleTV.Http.Request(session, {url = inAdr, headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200918.05.01'})
-		m_simpleTV.Http.Close(session)
-			if rc ~= 200 then
-				StopOnErr(2, 'feed channels')
-			 return
-			end
-		answer = answer:gsub('\\"', '%%22')
-		local title = answer:match('"feedTabbedHeaderRenderer":{"title":{"runs":%[{"text":"([^"]+)') or 'feed channels'
-		m_simpleTV.Control.SetTitle(title)
-		local tab, i = {}, 1
-			for g in answer:gmatch('"channelRenderer".-"subscribeButton"') do
-				local name = g:match('"simpleText":"([^"]+)')
-				local logo = g:match('"thumbnails":%[.-,{"url":"([^"]+)')
-				local adr = g:match('"channelId":"([^"]+)')
-				local desc = g:match('"descriptionSnippet":{"runs":%[{"text":"([^"]+)')
-				local count, count2 = g:match('"videoCountText":{"runs":%[{"text":"([^"]+)"},{"text":"([^"]+)')
-				local subCount = g:match('"subscriberCountText":{"simpleText":"([^"]+)')
-				if name and adr then
-					tab[i] = {}
-					tab[i].Id = i
-					tab[i].Address = 'https://www.youtube.com/channel/' .. adr .. '&isLogo=false'
-					name = title_clean(name)
-					if isInfoPanel == false then
-						tab[i].Name = name
-					else
-						tab[i].Name = name
-						tab[i].InfoPanelLogo = logo
-						tab[i].InfoPanelShowTime = 10000
-						tab[i].InfoPanelName = m_simpleTV.User.YT.Lng.channel .. ': ' .. name
-						local panelDescName
-						if desc and desc ~= '' then
-							panelDescName = m_simpleTV.User.YT.Lng.desc .. ' | '
-						end
-						tab[i].InfoPanelDesc = desc_html(desc, tab[i].InfoPanelLogo, name, tab[i].Address)
-						count = (count or '') .. (count2 or '')
-						if subCount and subCount ~= '' then
-							if count and count ~= '' then
-								subCount = ' | ' .. subCount
-							end
-						else
-							subCount = nil
-						end
-						tab[i].InfoPanelTitle = (panelDescName or ' ')
-											.. (count or '')
-											.. (subCount or '')
-					end
-					i = i + 1
-				end
-			end
-			if i == 1 then
-				StopOnErr(2, 'not found subscriptions channels')
-			 return
-			end
-		local FilterType, SortOrder, AutoNumberFormat
-		if #tab > 1 then
-			FilterType = 1
-			SortOrder = 1
-			AutoNumberFormat = '%1. %2'
-		else
-			FilterType = 2
-			SortOrder = 0
-			AutoNumberFormat = ''
-		end
-		tab.ExtParams = {FilterType = FilterType, SortOrder = SortOrder, AutoNumberFormat = AutoNumberFormat}
-		if m_simpleTV.User.paramScriptForSkin_buttonClose then
-			tab.ExtButton1 = {ButtonEnable = true, ButtonImageCx = 30, ButtonImageCy= 30, ButtonImage = m_simpleTV.User.paramScriptForSkin_buttonClose}
-		else
-			tab.ExtButton1 = {ButtonEnable = true, ButtonName = '✕'}
-		end
-		if m_simpleTV.User.paramScriptForSkin_buttonOk then
-			tab.OkButton = {ButtonImageCx = 30, ButtonImageCy= 30, ButtonImage = m_simpleTV.User.paramScriptForSkin_buttonOk}
-		end
-		local ret, id = m_simpleTV.OSD.ShowSelect_UTF8(title, 0, tab, 30000, 1 + 4 + 8 + 2 + 128)
-		m_simpleTV.Control.ExecuteAction(37)
-			if not id or ret == 3 then
-				m_simpleTV.Control.ExecuteAction(37)
-				m_simpleTV.Control.ExecuteAction(11)
-			 return
-			end
-		m_simpleTV.Control.PlayAddressT({address = tab[id].Address})
 	 return
 	end
 	if inAdr:match('&isPlst=') then
@@ -3499,6 +3460,10 @@ https://github.com/grafi-tt/lunaJson
 		params.User.First = true
 		if url:match('/feed/history') then
 			params.User.typePlst = 'history'
+		elseif url:match('/feed/channels') then
+			params.User.typePlst = 'channels'
+		else
+			params.User.typePlst = 'true'
 		end
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		asynPlsLoaderHelper.Work(session, t0, params)
@@ -3506,6 +3471,36 @@ https://github.com/grafi-tt/lunaJson
 		local tab = params.User.tab
 			if #tab == 0 then
 				StopOnErr(1)
+			 return
+			end
+			if params.User.typePlst == 'channels' then
+				local FilterType, SortOrder, AutoNumberFormat
+				if #tab > 1 then
+					FilterType = 1
+					SortOrder = 1
+					AutoNumberFormat = '%1. %2'
+				else
+					FilterType = 2
+					SortOrder = 0
+					AutoNumberFormat = ''
+				end
+				tab.ExtParams = {FilterType = FilterType, SortOrder = SortOrder, AutoNumberFormat = AutoNumberFormat}
+				if m_simpleTV.User.paramScriptForSkin_buttonClose then
+					tab.ExtButton1 = {ButtonEnable = true, ButtonImageCx = 30, ButtonImageCy= 30, ButtonImage = m_simpleTV.User.paramScriptForSkin_buttonClose}
+				else
+					tab.ExtButton1 = {ButtonEnable = true, ButtonName = '✕'}
+				end
+				if m_simpleTV.User.paramScriptForSkin_buttonOk then
+					tab.OkButton = {ButtonImageCx = 30, ButtonImageCy= 30, ButtonImage = m_simpleTV.User.paramScriptForSkin_buttonOk}
+				end
+				local ret, id = m_simpleTV.OSD.ShowSelect_UTF8(header, 0, tab, 30000, 1 + 4 + 8 + 2 + 128)
+				m_simpleTV.Control.ExecuteAction(37)
+					if not id or ret == 3 then
+						m_simpleTV.Control.ExecuteAction(37)
+						m_simpleTV.Control.ExecuteAction(11)
+					 return
+					end
+				m_simpleTV.Control.PlayAddressT({address = tab[id].Address})
 			 return
 			end
 		if m_simpleTV.User.YT.isAuth and inAdr:match('list=LM') then
