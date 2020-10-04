@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (4/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (5/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -2387,15 +2387,13 @@ https://github.com/grafi-tt/lunaJson
 					tab[i].Id = i
 					tab[i].Address = 'https://www.youtube.com/channel/' .. adr .. '&isLogo=false'
 					name = title_clean(name)
-					if isInfoPanel == false then
-						tab[i].Name = name
-					else
+					tab[i].Name = name
+					if isInfoPanel == true then
 						desc = g:match('"descriptionSnippet":{"runs":%[{"text":"([^"]+)')
 						count, count2 = g:match('"videoCountText":{"runs":%[{"text":"([^"]+)"},{"text":"([^"]+)')
 						subCount = g:match('"subscriberCountText":{"simpleText":"([^"]+)')
 						logo = g:match('"thumbnails":%[.-,{"url":"([^"]+)') or m_simpleTV.User.YT.logoDisk
 						logo = logo:gsub('^//', 'https://')
-						tab[i].Name = name
 						tab[i].InfoPanelLogo = logo
 						tab[i].InfoPanelShowTime = 10000
 						tab[i].InfoPanelName = m_simpleTV.User.YT.Lng.channel .. ': ' .. name
@@ -2523,6 +2521,9 @@ https://github.com/grafi-tt/lunaJson
 								or 'title'
 			params.User.Title = title_clean(params.User.Title)
 			m_simpleTV.Control.SetTitle(params.User.Title)
+			if params.ProgressEnabled == true then
+				params.User.plstTotalResults = answer:match('"stats":%[{"runs":%[{"text":"(%d+)')
+			end
 		end
 			if not AddInPl_Videos_YT(answer, params.User.tab, params.User.typePlst) then
 				ret.Done = true
@@ -2541,6 +2542,9 @@ https://github.com/grafi-tt/lunaJson
 		m_simpleTV.Http.SetCookies(session, ret.request.url, m_simpleTV.User.YT.cookies, '')
 		ret.request.headers = params.User.headers
 		ret.Count = #params.User.tab
+		if params.User.plstTotalResults then
+			ret.Progress = ret.Count / tonumber(params.User.plstTotalResults)
+		end
 	 return ret
 	end
 	function AsynPlsCallb_Plst_YT(session, rc, answer, userstring, params)
@@ -3464,6 +3468,13 @@ https://github.com/grafi-tt/lunaJson
 			params.User.typePlst = 'channels'
 		else
 			params.User.typePlst = 'true'
+		end
+		if url:match('list=WL')
+			or url:match('list=LL')
+			or url:match('list=LM')
+		then
+			params.ProgressEnabled = true
+			params.ProgressColor = 0x80FF0000
 		end
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		asynPlsLoaderHelper.Work(session, t0, params)
