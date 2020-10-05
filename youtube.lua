@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (5/9/20)
+-- видеоскрипт для сайта https://www.youtube.com (6/9/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -2460,6 +2460,7 @@ https://github.com/grafi-tt/lunaJson
 							channel = ''
 						end
 						desc = c:match('"descriptionSnippet":{"runs":%[{"text":"([^"]+)')
+								or c:match('"descriptionSnippet":{"simpleText":"([^"]+)')
 						if desc and desc ~= '' then
 							panelDescName = m_simpleTV.User.YT.Lng.desc
 						else
@@ -3459,9 +3460,6 @@ https://github.com/grafi-tt/lunaJson
 		end
 		m_simpleTV.User.YT.isVideo = false
 		local url = inAdr:gsub('&restart', '')
-		local t0 = {}
-		t0.url = url
-		t0.method = 'get'
 		local params = {}
 		params.Message = '⇩ ' .. m_simpleTV.User.YT.Lng.loading
 		params.Callback = AsynPlsCallb_Videos_YT
@@ -3478,6 +3476,9 @@ https://github.com/grafi-tt/lunaJson
 		else
 			params.User.typePlst = 'true'
 		end
+		if url:match('/feed/subscriptions') then
+			url = url:gsub('^(.-/feed/subscriptions).-$', '%1?flow=2')
+		end
 		if url:match('list=WL')
 			or url:match('list=LL')
 			or url:match('list=LM')
@@ -3485,6 +3486,9 @@ https://github.com/grafi-tt/lunaJson
 			params.ProgressEnabled = true
 			params.ProgressColor = 0x80FF0000
 		end
+		local t0 = {}
+		t0.url = url
+		t0.method = 'get'
 		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
 		asynPlsLoaderHelper.Work(session, t0, params)
 		local header = params.User.Title
