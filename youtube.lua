@@ -2392,7 +2392,7 @@ https://github.com/grafi-tt/lunaJson
 						desc = g:match('"descriptionSnippet":{"runs":%[{"text":"([^"]+)')
 						count, count2 = g:match('"videoCountText":{"runs":%[{"text":"([^"]+)"},{"text":"([^"]+)')
 						subCount = g:match('"subscriberCountText":{"simpleText":"([^"]+)')
-						logo = g:match('"thumbnails":%[.-,{"url":"([^"]+)') or m_simpleTV.User.YT.logoDisk
+						logo = g:match('"thumbnails":%[{"url":"([^"]+)') or ''
 						logo = logo:gsub('^//', 'https://')
 						tab[i].InfoPanelLogo = logo
 						tab[i].InfoPanelShowTime = 10000
