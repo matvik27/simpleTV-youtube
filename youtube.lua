@@ -2419,12 +2419,14 @@ https://github.com/grafi-tt/lunaJson
 				end
 			end
 		else
-			local times, count, publis, channel, name, adr
+			local times, count, publis, channel, name, adr, play_all, desc, upcoming, panelDescName
 			for c in str:gmatch('[eod]Renderer".-"thumbnailOverlayNowPlayingRenderer"') do
 				name = c:match('"title":{"runs":%[{"text":"([^"]+)') or c:match('"simpleText":"([^"]+)')
 				adr = c:match('"videoId":"([^"]+)')
 				times = c:match('"thumbnailOverlayTimeStatusRenderer".-"simpleText":"([^"]+)')
-				if name and adr then
+				play_all = c:match('"PLAY_ALL"')
+				upcoming = c:match('"upcomingEventText"')
+				if name and adr and not play_all and not upcoming then
 					name = title_clean(name)
 					tab[i] = {}
 					tab[i].Id = i
@@ -2457,10 +2459,16 @@ https://github.com/grafi-tt/lunaJson
 						else
 							channel = ''
 						end
+						desc = c:match('"descriptionSnippet":{"runs":%[{"text":"([^"]+)')
+						if desc and desc ~= '' then
+							panelDescName = m_simpleTV.User.YT.Lng.desc
+						else
+							panelDescName = ''
+						end
 						tab[i].InfoPanelLogo = string.format('https://i.ytimg.com/vi/%s/default.jpg', adr)
 						tab[i].InfoPanelName = name
-						tab[i].InfoPanelDesc = desc_html(nil, tab[i].InfoPanelLogo, name, tab[i].Address)
-						tab[i].InfoPanelTitle = string.format('%s%s | %s', count, channel, times)
+						tab[i].InfoPanelDesc = desc_html(desc, tab[i].InfoPanelLogo, name, tab[i].Address)
+						tab[i].InfoPanelTitle = string.format('%s%s%s | %s', panelDescName, count, channel, times)
 						tab[i].InfoPanelShowTime = 10000
 					end
 					i = i + 1
@@ -2900,6 +2908,7 @@ https://github.com/grafi-tt/lunaJson
 		or inAdr:match('/channel/.-/videos')
 		or inAdr:match('/c/.-/videos')
 		or inAdr:match('/feed/')
+		or inAdr:match('youtube%.com$')
 			then
 				isChPlst = false
 				isPlstVideos = true
