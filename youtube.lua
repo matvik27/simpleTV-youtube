@@ -1477,6 +1477,16 @@ https://github.com/grafi-tt/lunaJson
 			m_simpleTV.User.YT.PositionThumbsHandler = m_simpleTV.PositionThumbs.AddHandler(handlerInfo)
 		end
 	end
+	local function Title_isInfoPanel_false(title, name)
+		if m_simpleTV.User.YT.isTrailer == true then
+			title = title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.preview
+		end
+		local fps = name:match('%d+ FPS')
+		if fps then
+			title = title .. '\n☑ ' .. fps
+		end
+	 return title
+	end
 	local function MarkWatch_YT()
 		if m_simpleTV.User.YT.videostats and not inAdr:match('&isPlst=history') then
 			local sessionMarkWatch = m_simpleTV.Http.New(userAgent)
@@ -3055,13 +3065,7 @@ https://github.com/grafi-tt/lunaJson
 			m_simpleTV.Control.ChangeChannelName(header, m_simpleTV.Control.ChannelID, false)
 		end
 		if isInfoPanel == false then
-			if m_simpleTV.User.YT.isTrailer == true then
-				title = title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.preview
-			end
-			local fps = t[index].Name:match('%d+ FPS')
-			if fps then
-				title = title .. '\n☑ ' .. fps
-			end
+			title = Title_isInfoPanel_false(title, t[index].Name)
 			ShowMessage('◽️ ' .. header .. '\n' .. title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.plst)
 		end
 		m_simpleTV.Control.CurrentTitle_UTF8 = header
@@ -3605,13 +3609,7 @@ https://github.com/grafi-tt/lunaJson
 			m_simpleTV.Control.ChangeChannelName(header, m_simpleTV.Control.ChannelID, false)
 		end
 		if isInfoPanel == false then
-			if m_simpleTV.User.YT.isTrailer == true then
-				title = title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.preview
-			end
-			local fps = t[index].Name:match('%d+ FPS')
-			if fps then
-				title = title .. '\n☑ ' .. fps
-			end
+			title = Title_isInfoPanel_false(title, t[index].Name)
 			ShowMessage('◽️ ' .. header .. '\n' .. title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.plst)
 		end
 	 return
@@ -3811,13 +3809,7 @@ https://github.com/grafi-tt/lunaJson
 				m_simpleTV.Control.ChangeChannelName(header, m_simpleTV.Control.ChannelID, false)
 			end
 			if isInfoPanel == false then
-				if m_simpleTV.User.YT.isTrailer == true then
-					title = title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.preview
-				end
-				local fps = t[index].Name:match('%d+ FPS')
-				if fps then
-					title = title .. '\n☑ ' .. fps
-				end
+				title = Title_isInfoPanel_false(title, t[index].Name)
 				ShowMessage('◽️ ' .. header .. '\n' .. title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.plst)
 			end
 			if not (#tab == 1 and m_simpleTV.User.YT.duration and m_simpleTV.User.YT.duration > 600) then
@@ -4040,13 +4032,7 @@ https://github.com/grafi-tt/lunaJson
 					m_simpleTV.Control.SetTitle(header .. ' (' .. title .. ')')
 				end
 				if isInfoPanel == false then
-					if m_simpleTV.User.YT.isTrailer == true then
-						title = title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.preview
-					end
-					local fps = t[index].Name:match('%d+ FPS')
-					if fps then
-						title = title .. '\n☑ ' .. fps
-					end
+					title = Title_isInfoPanel_false(title, t[index].Name)
 					ShowMessage('◽️ ' .. header .. '\n' .. title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.plst)
 				end
 			end
@@ -4208,13 +4194,7 @@ https://github.com/grafi-tt/lunaJson
 		end
 		MarkWatch_YT()
 		if isInfoPanel == false then
-			if m_simpleTV.User.YT.isTrailer == true then
-				title = title .. '\n☑ ' .. m_simpleTV.User.YT.Lng.preview
-			end
-			local fps = t[index].Name:match('%d+ FPS')
-			if fps then
-				title = title .. '\n☑ ' .. fps
-			end
+			title = Title_isInfoPanel_false(title, t[index].Name)
 			ShowMessage(title)
 		end
 		m_simpleTV.Http.Close(session)
