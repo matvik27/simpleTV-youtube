@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (6/10/20)
+-- видеоскрипт для сайта https://www.youtube.com (7/10/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -2527,8 +2527,8 @@ https://github.com/grafi-tt/lunaJson
 				ret.Cancel = true
 			 return ret
 			end
-		answer = answer:gsub('\\"', '%%22')
 		if params.User.First == true then
+			answer = answer:gsub('\\"', '%%22')
 			params.User.headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200923.01.00'
 									.. '\nX-Youtube-Identity-Token: ' .. (answer:match('"ID_TOKEN":"([^"]+)') or '')
 			params.User.First = false
@@ -3292,7 +3292,7 @@ https://github.com/grafi-tt/lunaJson
 				for w in answer:gmatch('"compactStationRenderer".-"thumbnailOverlays"') do
 					name = w:match('text":"([^"]+)')
 					adr = w:match('"url":"([^"]+)')
-					logo = w:match('"thumbnails":%["url":"([^"]+)') or ''
+
 						if not adr or not name then break end
 					adr = adr:gsub('\\u0026', '&')
 					tab[i] = {}
@@ -3305,6 +3305,7 @@ https://github.com/grafi-tt/lunaJson
 						tab[i].Address = string.format('https://www.youtube.com%s&isChPlst=true', adr)
 					end
 					if isInfoPanel == true then
+						logo = w:match('"thumbnails":%["url":"([^"]+)') or ''
 						logo = logo:gsub('hqdefault', 'default')
 						logo = logo:gsub('^//', 'https://')
 						logo = logo:gsub('/vi_webp/', '/vi/')
@@ -3324,7 +3325,7 @@ https://github.com/grafi-tt/lunaJson
 				for w in answer:gmatch('"itemSectionRenderer":".-"thumbnails":%["url":"[^"]+') do
 					name = w:match('"title":"runs":%["text":"([^"]+)')
 					adr = w:match('"webCommandMetadata":"url":"([^"]+)')
-					logo = w:match('"thumbnails":%["url":"([^"]+)')
+
 						if not adr or not name then break end
 					tab[i] = {}
 					tab[i].Id = i
@@ -3332,6 +3333,7 @@ https://github.com/grafi-tt/lunaJson
 					tab[i].Name = j .. '. ' .. name
 					tab[i].Address = string.format('https://www.youtube.com%s&isChPlst=true', adr)
 					if isInfoPanel == true then
+						logo = w:match('"thumbnails":%["url":"([^"]+)') or ''
 						logo = logo:gsub('hqdefault', 'default')
 						logo = logo:gsub('^//', 'https://')
 						logo = logo:gsub('/vi_webp/', '/vi/')
