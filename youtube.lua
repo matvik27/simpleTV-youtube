@@ -2610,6 +2610,10 @@ https://github.com/grafi-tt/lunaJson
 			t.elementHeight = m_simpleTV.User.YT.ThumbsInfo.thumbHeight
 			t.startTime = index * imgLen
 			t.length = imgLen
+			t.marginLeft = 1
+			t.marginRight = 2
+			t.marginTop = 0
+			t.marginBottom = 0
 			m_simpleTV.PositionThumbs.AppendThumb(t)
 		 return true
 		end
