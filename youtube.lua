@@ -3292,7 +3292,6 @@ https://github.com/grafi-tt/lunaJson
 				for w in answer:gmatch('"compactStationRenderer".-"thumbnailOverlays"') do
 					name = w:match('text":"([^"]+)')
 					adr = w:match('"url":"([^"]+)')
-
 						if not adr or not name then break end
 					adr = adr:gsub('\\u0026', '&')
 					tab[i] = {}
@@ -3325,7 +3324,6 @@ https://github.com/grafi-tt/lunaJson
 				for w in answer:gmatch('"itemSectionRenderer":".-"thumbnails":%["url":"[^"]+') do
 					name = w:match('"title":"runs":%["text":"([^"]+)')
 					adr = w:match('"webCommandMetadata":"url":"([^"]+)')
-
 						if not adr or not name then break end
 					tab[i] = {}
 					tab[i].Id = i
