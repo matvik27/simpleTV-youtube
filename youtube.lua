@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (7/10/20)
+-- видеоскрипт для сайта https://www.youtube.com (11/10/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -3479,13 +3479,18 @@ https://github.com/grafi-tt/lunaJson
 		params.User.First = true
 		if url:match('/feed/history') then
 			params.User.typePlst = 'history'
+			logo = 'https://s.ytimg.com/yts/img/reporthistory/land-img-vfl_eF5BA.png'
 		elseif url:match('/feed/channels') then
 			params.User.typePlst = 'channels'
 		else
 			params.User.typePlst = 'true'
 		end
+		local logo
 		if url:match('/feed/subscriptions') then
 			url = url:gsub('^(.-/feed/subscriptions).-$', '%1?flow=2')
+			logo = 'https://s.ytimg.com/yts/img/favicon_144-vflWmzoXw.png'
+		elseif url:match('/feed/history') then
+			logo = 'https://s.ytimg.com/yts/img/reporthistory/land-img-vfl_eF5BA.png'
 		end
 		if url:match('list=WL')
 			or url:match('list=LL')
@@ -3535,7 +3540,7 @@ https://github.com/grafi-tt/lunaJson
 				m_simpleTV.Control.PlayAddressT({address = tab[id].Address})
 			 return
 			end
-		if m_simpleTV.User.YT.isAuth and inAdr:match('list=LM') then
+		if m_simpleTV.User.YT.isAuth and url:match('list=LM') then
 			header = header .. ' 🎵'
 		end
 		m_simpleTV.User.YT.Plst = tab
@@ -3571,7 +3576,7 @@ https://github.com/grafi-tt/lunaJson
 			tab.OkButton = {ButtonImageCx = 30, ButtonImageCy= 30, ButtonImage = m_simpleTV.User.paramScriptForSkin_buttonOk}
 		end
 		local vId = tab[1].Address:match('v=([^&]+)')
-		m_simpleTV.User.YT.AddToBaseUrlinAdr = inAdr
+		m_simpleTV.User.YT.AddToBaseUrlinAdr = url
 		m_simpleTV.User.YT.AddToBaseVideoIdPlst = vId
 		local retAdr
 		tab.ExtParams = {}
@@ -3606,8 +3611,10 @@ https://github.com/grafi-tt/lunaJson
 		end
 		m_simpleTV.Control.CurrentAddress = retAdr
 		if m_simpleTV.Control.MainMode == 0 then
-			m_simpleTV.Control.ChangeChannelLogo(m_simpleTV.User.paramScriptForSkin_logoYT
-												or 'https://i.ytimg.com/vi/' .. vId .. '/hqdefault.jpg'
+			logo = m_simpleTV.User.paramScriptForSkin_logoYT
+					or logo
+					or 'https://i.ytimg.com/vi/' .. vId .. '/hqdefault.jpg'
+			m_simpleTV.Control.ChangeChannelLogo(logo
 												, m_simpleTV.Control.ChannelID
 												, 'CHANGE_IF_NOT_EQUAL')
 			m_simpleTV.Control.ChangeChannelName(header, m_simpleTV.Control.ChannelID, false)
