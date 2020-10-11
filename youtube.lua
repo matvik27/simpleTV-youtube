@@ -3491,6 +3491,8 @@ https://github.com/grafi-tt/lunaJson
 			logo = 'https://s.ytimg.com/yts/img/favicon_144-vfliLAfaB.png'
 		elseif url:match('/feed/history') then
 			logo = 'https://s.ytimg.com/yts/img/reporthistory/land-img-vfl_eF5BA.png'
+		elseif url:match('youtube%.com$') then
+			logo = 'https://s.ytimg.com/yts/img/favicon_144-vfliLAfaB.png'
 		end
 		if url:match('list=WL')
 			or url:match('list=LL')
