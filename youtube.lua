@@ -3488,7 +3488,7 @@ https://github.com/grafi-tt/lunaJson
 		local logo
 		if url:match('/feed/subscriptions') then
 			url = url:gsub('^(.-/feed/subscriptions).-$', '%1?flow=2')
-			logo = 'https://s.ytimg.com/yts/img/favicon_144-vflWmzoXw.png'
+			logo = 'https://s.ytimg.com/yts/img/favicon_144-vfliLAfaB.png'
 		elseif url:match('/feed/history') then
 			logo = 'https://s.ytimg.com/yts/img/reporthistory/land-img-vfl_eF5BA.png'
 		end
