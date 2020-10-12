@@ -2850,7 +2850,9 @@ https://github.com/grafi-tt/lunaJson
 			or inAdr:match('/shared%?ci=')
 			or inAdr:match('list=LL')
 			or inAdr:match('list=LM')
-			or (inAdr:match('/feed/') and not inAdr:match('/feed/storefront')))
+			or (inAdr:match('/feed/')
+				and not inAdr:match('/feed/storefront')
+				and not inAdr:match('/feed/trending')))
 		then
 			local err = '⚠️ ' .. m_simpleTV.User.YT.Lng.noCookies
 			StopOnErr(100, err)
