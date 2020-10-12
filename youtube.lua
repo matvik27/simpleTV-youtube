@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (11/10/20)
+-- видеоскрипт для сайта https://www.youtube.com (12/10/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -111,7 +111,6 @@ local infoInFile = false
 			end
 		end
 		m_simpleTV.User.YT.logoDisk = f
-		os.remove(m_simpleTV.MainScriptDir .. decode64('dXNlci9zdGFydHVwL3ZpZGVvdHJhY2tzLmx1YQ'))
 	end
 	if inAdr:match('^%-')
 		or inAdr:match('/feed/channels')
