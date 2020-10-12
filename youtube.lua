@@ -3540,7 +3540,7 @@ https://github.com/grafi-tt/lunaJson
 						m_simpleTV.Control.ExecuteAction(11)
 					 return
 					end
-				m_simpleTV.Control.PlayAddressT({address = tab[id].Address})
+				m_simpleTV.Control.PlayAddressT({address = tab[id].Address, insertInRecent = false})
 			 return
 			end
 		if m_simpleTV.User.YT.isAuth and url:match('list=LM') then
