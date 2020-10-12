@@ -1,29 +1,43 @@
-not get mix-plst from api
-https://www.youtube.com/embed?listType=playlist&list=RD91Niv2q4gvc
+поиск:
+-простоквашино (для видео)
+поиск плейлистов
+--taylor swift (для плейлистов)
+---becky g (для каналов)
+-+вселенная (для прямых трансляций)
+cookies нужны:
+https://www.youtube.com/feed/channels - каналы с подпиской
+https://www.youtube.com/feed/trending - в тренде
+https://www.youtube.com/feed/subscriptions - подписки
+https://www.youtube.com/feed/history - история
+https://www.youtube.com/playlist?list=LL - понравившиеся
+https://www.youtube.com/playlist?list=LM - понравившиеся (музыка)
+https://www.youtube.com/playlist?list=WL - посмотреть позже
+https://www.youtube.com/watch?v=c90fkhgpq04&list=WL&t=0s&index=3 - посмотреть позже
+https://www.youtube.com/watch?v=jwhq08k_uVo = предосмотр
+https://www.youtube.com/watch?v=kFW8kJ9Y1tM - видео
+с рефером
+https://www.youtube.com/watch?v=zbT53Q_olkU$OPT:http-referrer=https://cinema.mosfilm.ru
+главная
+https://www.youtube.com
+фильмы - предосмотр
+https://www.youtube.com/feed/storefront?bp=ogUCKAI%3D
+главы:
+https://youtu.be/-cHCcUrHb94
+https://www.youtube.com/watch?v=EwHIH3jIwuM
 rss feed channel
 https://www.youtube.com/feeds/videos.xml?channel_id=UCba3hpU7EFBSk817y9qZkiA
 rss feed user
 https://www.youtube.com/feeds/videos.xml?user=periodicvideos
+not get mix-plst from api
+https://www.youtube.com/embed?listType=playlist&list=RD91Niv2q4gvc
 id no Correct
 https://www.youtube.com/embed/6QFwo57WKwh
-chapters(timestamps) from description
-https://youtu.be/-cHCcUrHb94
-chapters from description
-https://www.youtube.com/watch?v=EwHIH3jIwuM
 видео в плейлисте с указаным временем
 https://youtu.be/C-u5WLJ9Yk4?list=PLpdRVFVH_vIMvkMVdJScNK3S2SeOv7k1d&t=111
-Подписки, cookies нужны
-https://www.youtube.com/feed/channels
-открывает, cookies не нужны
-https://www.youtube.com/watch?v=zbT53Q_olkU$OPT:http-referrer=https://cinema.mosfilm.ru
 ролик заблокирован для БФ (показывает)
 https://www.youtube.com/watch?v=0e9JgyzCIBc
 копировать и вставить
 https://www.youtube.com/c/ТелеканалНАШ
-плейлисты канала - Vevo Presents с ограниченым доступом
-https://www.youtube.com/user/xoxxxoooxo
-предосмотр (открывает - cookies нужны)
-https://www.youtube.com/watch?v=jwhq08k_uVo
 Пользователи YouTube отметили этот ролик как недопустимый
 https://www.youtube.com/watch?v=6SJNVb0GnPI
 длинный 100 час.
@@ -36,16 +50,6 @@ https://youtu.be/NzsbkX2uzlU?list=PLcLrKCb6x5m2J2v9KoVw9JiWt2laXd0AR&t=3371
 https://youtu.be/SzjpwMfyDUs?list=PLcLrKCb6x5m2J2v9KoVw9JiWt2laXd0AR&t=2250
 + в ссылке
 https://www.youtube.com/watch_videos?more_url=&type=0&title=%D0%A2%D1%80%D0%B5%D0%BF+%28%D0%BC%D1%83%D0%B7%D1%8B%D0%BA%D0%B0%29+%E2%80%93+%D1%82%D0%B5%D0%BC%D0%B0&video_ids=UF3Ueqww7M8%2CQYh6mYIJG2Y%2CLH4Y1ZUUx2g%2Cb8m9zhNAgKs%2C4LfJnj66HVQ%2Ct7lM7Bn16Zg
-поиск видео - простоквашино
-- простоквашино
-поиск плейлистов - taylor swift
--- taylor swift
-поиск каналов  - becky g
----becky g
-поиск прямых трансляций - вселенная
--+вселенная
-большой плейлист > 100k
-https://www.youtube.com/watch?v=v0Zwe9Q40iw&list=UUupvZG-5ko_eiXAupbDfxWw
 subtitle languageCode: es-419
 https://www.youtube.com/watch?v=VqEbCxg2bNI
 для сайта invidio.us
@@ -64,10 +68,6 @@ test patten 2
 https://www.youtube.com/watch?v=IPXIgEAGe4U
 вертикальное видео
 https://www.youtube.com/watch?v=KRntP-q_R9s
-плейлист - Посмотреть позже -  cookies нужны. только первые 200 роликов
-https://www.youtube.com/playlist?list=WL
-плейлист - Посмотреть позже - cookie нужны
-https://www.youtube.com/watch?v=c90fkhgpq04&list=WL&t=0s&index=3
 встроеная прямая трансляция канала
 https://www.youtube.com/embed/live_stream?channel=UCba3hpU7EFBSk817y9qZkiA
 альбомы
@@ -102,8 +102,6 @@ https://www.youtube.com/embed/videoseries?list=PLx0sYbCqOb8TBPRdmBHs5Iftvv9TPboY
 https://www.youtube.com/watch?v=9Lo_r_lGM6Q
 прямой эфир - HLS
 https://www.youtube.com/watch?v=3Q11d6I21PE
-требует вход - заставка (открывает - cookies нужны)
-https://www.youtube.com/watch?v=kFW8kJ9Y1tM
 геоблок - заставка
 https://youtube.com/watch?v=sJL6WA-aGkQ
 видео недоступно - заглушка
