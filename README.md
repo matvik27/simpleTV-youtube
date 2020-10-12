@@ -1,3 +1,4 @@
+[![simpleTV IPTV player](https://img.shields.io/badge/simpleTV%20IPTV%20player-scripts-blue)](https://github.com/Nexterr/simpleTV)
 <p align="center"><a href="http://iptv.gen12.net"><img border="0" src="http://iptv.gen12.net/dokuwiki/lib/exe/fetch.php?cache=&media=mantis:simpletv:cb0ur-wpg7e.png" alt="simpleTV"></a></p>
 
 ### скрипт к плееру [simpleTV](http://iptv.gen12.net) для сайта [YouTube.com](https://www.youtube.com)
