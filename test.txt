@@ -24,9 +24,8 @@ https://www.youtube.com/feed/storefront?bp=ogUCKAI%3D
 главы:
 https://youtu.be/-cHCcUrHb94
 https://www.youtube.com/watch?v=EwHIH3jIwuM
-rss feed channel
+RSS feed:
 https://www.youtube.com/feeds/videos.xml?channel_id=UCba3hpU7EFBSk817y9qZkiA
-rss feed user
 https://www.youtube.com/feeds/videos.xml?user=periodicvideos
 not get mix-plst from api
 https://www.youtube.com/embed?listType=playlist&list=RD91Niv2q4gvc
