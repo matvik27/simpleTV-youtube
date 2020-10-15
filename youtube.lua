@@ -3089,14 +3089,20 @@ https://github.com/grafi-tt/lunaJson
 				 return
 				end
 		end
-		m_simpleTV.Http.SetCookies(session, url, 'PREF=hl=' .. m_simpleTV.User.YT.Lng.hl .. ';', '')
-		local rc, answer = m_simpleTV.Http.Request(session, {url = url:gsub('&restart', ''), headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200918.05.01'})
+		if not url:match('browse_ajax') then
+			m_simpleTV.User.YT.ChPlst.Identity_Token = nil
+		end
+		m_simpleTV.Http.SetCookies(session, url, m_simpleTV.User.YT.cookies, '')
+		local rc, answer = m_simpleTV.Http.Request(session, {url = url:gsub('&restart', ''), headers = 'X-YouTube-Client-Name: 1\nX-YouTube-Client-Version: 2.20200918.05.01\nX-Youtube-Identity-Token: ' .. (m_simpleTV.User.YT.ChPlst.Identity_Token or '')})
 			if rc ~= 200 then
 				StopOnErr(4, 'cant load channal page')
 			 return
 			end
 		answer = answer:gsub('\\"', '%%22')
 		answer = answer:gsub('\\/', '/')
+		if not url:match('browse_ajax') then
+			m_simpleTV.User.YT.ChPlst.Identity_Token = answer:match('"ID_TOKEN":"([^"]+)')
+		end
 		local chTitle = answer:match('channelMetadataRenderer.-"title":"([^"]+)') or 'playlists'
 		if chTitle == 'playlists' and not url:match('browse_ajax') then
 			m_simpleTV.Http.SetCookies(session, url, 'PREF=hl=' .. m_simpleTV.User.YT.Lng.hl .. ';', '')
@@ -3352,7 +3358,9 @@ https://github.com/grafi-tt/lunaJson
 			 return
 			end
 		if ret == 1 then
-			if tab[id].Address:match('&mix=') then
+			if tab[id].Address:match('&mix=')
+				or tab[id].Address:match('list=LL')
+			then
 				m_simpleTV.Http.Close(session)
 				m_simpleTV.Control.ChangeAddress = 'No'
 				m_simpleTV.Control.CurrentAddress = tab[id].Address .. '&restart'
@@ -3486,12 +3494,19 @@ https://github.com/grafi-tt/lunaJson
 			AutoNumberFormat = ''
 			pl = 32
 		end
-		local ButtonScript1 = [[
+		local ButtonScript1
+		if m_simpleTV.User.YT.isChPlst then
+			ButtonScript1 = 'ChPlst_YT()'
+			pl = 0
+		else
+			ButtonScript1 = [[
 						m_simpleTV.Control.ExecuteAction(37)
 						m_simpleTV.Control.ChangeAddress = 'No'
 						m_simpleTV.Control.CurrentAddress = 'https://www.youtube.com/channel/' .. m_simpleTV.User.YT.chId .. '&restart'
 						dofile(m_simpleTV.MainScriptDir .. 'user\\video\\youtube.lua')
 					]]
+			m_simpleTV.Control.CurrentTitle_UTF8 = header
+		end
 		if m_simpleTV.User.paramScriptForSkin_buttonPlst then
 			tab.ExtButton1 = {ButtonEnable = true, ButtonImageCx = 30, ButtonImageCy= 30, ButtonImage = m_simpleTV.User.paramScriptForSkin_buttonPlst, ButtonScript = ButtonScript1}
 		else
@@ -3530,7 +3545,6 @@ https://github.com/grafi-tt/lunaJson
 		retAdr = retAdr or t[index].Address
 		m_simpleTV.User.YT.QltyIndex = index
 		retAdr = CheckUrl(retAdr, t, index)
-		m_simpleTV.Control.CurrentTitle_UTF8 = header
 		if not (#tab == 1 and m_simpleTV.User.YT.duration and m_simpleTV.User.YT.duration > 600) then
 			retAdr = retAdr .. '$OPT:POSITIONTOCONTINUE=0'
 		end
