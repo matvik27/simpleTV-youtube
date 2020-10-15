@@ -31,7 +31,7 @@ local infoInFile = false
 		infoInFile = os.clock()
 	end
 	m_simpleTV.OSD.ShowMessageT({text = '', color = 0xFF8080FF, showTime = 1000, id = 'channelName'})
-	htmlEntities = require 'htmlEntities'
+	local htmlEntities = require 'htmlEntities'
 	require 'ex'
 	require 'lfs'
 	require 'jsdecode'
