@@ -31,6 +31,7 @@ local infoInFile = false
 		infoInFile = os.clock()
 	end
 	m_simpleTV.OSD.ShowMessageT({text = '', color = 0xFF8080FF, showTime = 1000, id = 'channelName'})
+	htmlEntities = require 'htmlEntities'
 	require 'ex'
 	require 'lfs'
 	require 'jsdecode'
@@ -939,23 +940,7 @@ https://github.com/grafi-tt/lunaJson
 	 return sec:gsub('^0[0:]+(.+:)', '%1')
 	end
 	local function unescape_html(str)
-		str = str:gsub('&#8206;', '')
-		str = str:gsub('&#8207;', '')
-		str = str:gsub('&#1564;', '')
-		str = str:gsub('&#8470;', '№')
-		str = str:gsub('&#39;', '\'')
-		str = str:gsub('&ndash;', '-')
-		str = str:gsub('&#8217;', '\'')
-		str = str:gsub('&raquo;', '"')
-		str = str:gsub('&laquo;', '"')
-		str = str:gsub('&lt;', '<')
-		str = str:gsub('&gt;', '>')
-		str = str:gsub('&quot;', '"')
-		str = str:gsub('&apos;', '\'')
-		str = str:gsub('&#(%d+);', function(n) return string.char(n) end)
-		str = str:gsub('&#x(%d+);', function(n) return string.char(tonumber(n, 16)) end)
-		str = str:gsub('&amp;', '&')
-	 return str
+	 return htmlEntities.decode(str)
 	end
 	local function title_clean(s)
 		s = s:gsub('%%22', '"')
