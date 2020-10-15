@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (14/10/20)
+-- видеоскрипт для сайта https://www.youtube.com (15/10/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -967,6 +967,10 @@ https://github.com/grafi-tt/lunaJson
 		d = d:gsub('\\u200%a', '')
 		d = d:gsub('\\u202%a', '')
 		d = d:gsub('\\u00ad', '')
+		d = d:gsub('&#8206;', '')
+		d = d:gsub('&#8207;', '')
+		d = d:gsub('&#1564;', '')
+		d = d:gsub('&#8470;', '№')
 		d = d:gsub('\\r', '')
 		d = d:gsub('\r', '')
 		d = d:gsub('\\n', '\n')
