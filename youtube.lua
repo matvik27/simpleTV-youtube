@@ -971,8 +971,8 @@ https://github.com/grafi-tt/lunaJson
 			desc = desc:gsub('"+', '"')
 			desc = desc:gsub('(<a href=".-)%)"', '%1"')
 			desc = desc:gsub('%)</a>', '</a>%)')
-			desc = desc:gsub('none">(https?://[%a%.]*youtu[%.combe].-)</a>', 'none">%1</a> <a href="simpleTVLua:PlayAddressT(\'%1\')"><img src="https://raw.githubusercontent.com/Nexterr/simpleTV.img/master/YT_play.png" height="32" valign="top"></a>')
-			desc = desc:gsub('none">(https?://[%w%.]*twitch%.tv.-)</a>', 'none">%1</a> <a href="simpleTVLua:PlayAddressT(\'%1\')"><img src="https://raw.githubusercontent.com/Nexterr/simpleTV.img/master/YT_play.png" height="32" valign="top"></a>')
+			desc = desc:gsub('none">(https?://[%a%.]*youtu[%.combe].-)</a>', 'none">%1</a> <a href="simpleTVLua:PlayAddressT_YT(\'%1\')"><img src="https://raw.githubusercontent.com/Nexterr/simpleTV.img/master/YT_play.png" height="32" valign="top"></a>')
+			desc = desc:gsub('none">(https?://[%w%.]*twitch%.tv.-)</a>', 'none">%1</a> <a href="simpleTVLua:PlayAddressT_YT(\'%1\')"><img src="https://raw.githubusercontent.com/Nexterr/simpleTV.img/master/YT_play.png" height="32" valign="top"></a>')
 				for t0, t in desc:gmatch('(.)#(%S+)') do
 					t = t:gsub('%p*$', '')
 					if not t:match('^%d%d?$') and (t0 == ' ' or t0 == '\n') then
@@ -2662,7 +2662,7 @@ https://github.com/grafi-tt/lunaJson
 		 return true
 		end
 	end
-	function PlayAddressT(address)
+	function PlayAddressT_YT(address)
 		m_simpleTV.Control.PlayAddressT({address = address})
 	end
 	function SavePlst_YT()
