@@ -14,5 +14,5 @@
  - в папку ..\luaScr\user\video
 ---------------------------------------------
 Совместимость:
-- удалить или отключить дополнение [videotracks](http://iptv.gen12.net/bugtracker/view.php?id=1704)
+- дополнение [videotracks](http://iptv.gen12.net/bugtracker/view.php?id=1704) необходимо удалить
 ---------------------------------------------
