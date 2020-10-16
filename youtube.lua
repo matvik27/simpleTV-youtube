@@ -2582,8 +2582,9 @@ https://github.com/grafi-tt/lunaJson
 			if params.User.typePlst == 'rss_channels' then
 				title = title .. ' [RSS Feed]'
 			end
-			params.User.Title = title_clean(title)
-			m_simpleTV.Control.SetTitle(params.User.Title)
+			title = title_clean(title)
+			m_simpleTV.Control.SetTitle(m_simpleTV.User.YT.ChPlst.chTitle or title)
+			params.User.Title = title
 			if params.ProgressEnabled == true then
 				params.User.plstTotalResults = answer:match('"stats":%[{"runs":%[{"text":"(%d+)')
 			end
@@ -2683,9 +2684,9 @@ https://github.com/grafi-tt/lunaJson
 							.. name
 							.. '\n' .. adr .. '\n'
 				end
-			if m_simpleTV.User.YT.ChTitleForSave then
+			if m_simpleTV.User.YT.ChPlst.chTitle then
 				header = header .. ' [' .. m_simpleTV.User.YT.Lng.channel
-						.. ' - ' .. m_simpleTV.User.YT.ChTitleForSave .. '] '
+						.. ' - ' .. m_simpleTV.User.YT.ChPlst.chTitle .. '] '
 			end
 			header = m_simpleTV.Common.UTF8ToMultiByte(header)
 			header = header:gsub('%c', '')
@@ -3339,6 +3340,7 @@ https://github.com/grafi-tt/lunaJson
 				end
 			end
 		tab.ExtParams = {FilterType = 2, LuaOnCancelFunName = 'OnMultiAddressCancel_YT'}
+		m_simpleTV.User.YT.ChPlst.chTitle = chTitle
 		local ret, id = m_simpleTV.OSD.ShowSelect_UTF8('📋 ' .. m_simpleTV.User.YT.ChTitle, index - 1, tab, 30000, 1 + 4 + 8 + 2 + 128)
 		m_simpleTV.Control.CurrentTitle_UTF8 = chTitle
 		if m_simpleTV.Control.MainMode == 0 then
@@ -3358,6 +3360,9 @@ https://github.com/grafi-tt/lunaJson
 			 return
 			end
 		if ret == 1 then
+			m_simpleTV.User.YT.ChPlst.Num = tab[id].Name:match('^(%d+)') or tab[1].Name
+			m_simpleTV.User.YT.ChPlst.Header = tab[id].Name:match('^%d+%. (.+)') or tab[1].Name
+			m_simpleTV.User.YT.ChPlst.Refresh = false
 			if tab[id].Address:match('&mix=')
 				or tab[id].Address:match('list=LL')
 			then
@@ -3370,10 +3375,6 @@ https://github.com/grafi-tt/lunaJson
 				isPlst = true
 				plstId = tab[id].Address:gsub('^.-list=(.+)', '%1')
 			end
-			m_simpleTV.User.YT.ChPlst.Num = tab[id].Name:match('^(%d+)') or tab[1].Name
-			m_simpleTV.User.YT.ChPlst.Header = tab[id].Name:match('^%d+%. (.+)') or tab[1].Name
-			m_simpleTV.User.YT.ChPlst.Refresh = false
-			m_simpleTV.User.YT.ChTitleForSave = chTitle
 		end
 			if ret == 2 then
 				PrevChPlst_YT()
@@ -3387,9 +3388,15 @@ https://github.com/grafi-tt/lunaJson
 	if isPlstVideos then
 		m_simpleTV.Control.ExecuteAction(37)
 		if not m_simpleTV.User.YT.isChPlst then
-			m_simpleTV.User.YT.ChTitleForSave = nil
+			m_simpleTV.User.YT.ChPlst.chTitle = nil
 		end
 		m_simpleTV.User.YT.isVideo = false
+		if m_simpleTV.User.YT.isChPlst
+			and not m_simpleTV.User.YT.is_channel_banner
+		then
+			SetBackground((m_simpleTV.User.YT.channel_banner or m_simpleTV.User.YT.logoDisk), 3)
+		end
+		m_simpleTV.User.YT.is_channel_banner = nil
 		local url = inAdr:gsub('&restart', '')
 		local params = {}
 		params.Message = '⇩ ' .. m_simpleTV.User.YT.Lng.loading
@@ -3495,22 +3502,25 @@ https://github.com/grafi-tt/lunaJson
 			pl = 32
 		end
 		local ButtonScript1
-		if m_simpleTV.User.YT.isChPlst then
-			ButtonScript1 = 'ChPlst_YT()'
-			pl = 0
+		if m_simpleTV.User.YT.isChPlst
+		then
+			if m_simpleTV.User.paramScriptForSkin_buttonPlst then
+				tab.ExtButton1 = {ButtonEnable = true, ButtonImageCx = 30, ButtonImageCy= 30, ButtonImage = m_simpleTV.User.paramScriptForSkin_buttonPlst, ButtonScript = 'ChPlst_YT()'}
+			else
+				tab.ExtButton1 = {ButtonEnable = true, ButtonName = '📋', ButtonScript = 'ChPlst_YT()'}
+			end
 		else
-			ButtonScript1 = [[
+			local ButtonScript1 = [[
 						m_simpleTV.Control.ExecuteAction(37)
 						m_simpleTV.Control.ChangeAddress = 'No'
 						m_simpleTV.Control.CurrentAddress = 'https://www.youtube.com/channel/' .. m_simpleTV.User.YT.chId .. '&restart'
 						dofile(m_simpleTV.MainScriptDir .. 'user\\video\\youtube.lua')
 					]]
-			m_simpleTV.Control.CurrentTitle_UTF8 = header
-		end
-		if m_simpleTV.User.paramScriptForSkin_buttonPlst then
-			tab.ExtButton1 = {ButtonEnable = true, ButtonImageCx = 30, ButtonImageCy= 30, ButtonImage = m_simpleTV.User.paramScriptForSkin_buttonPlst, ButtonScript = ButtonScript1}
-		else
-			tab.ExtButton1 = {ButtonEnable = true, ButtonName = '📋', ButtonScript = ButtonScript1}
+			if m_simpleTV.User.paramScriptForSkin_buttonPlst then
+				tab.ExtButton1 = {ButtonEnable = true, ButtonImageCx = 30, ButtonImageCy= 30, ButtonImage = m_simpleTV.User.paramScriptForSkin_buttonPlst, ButtonScript = ButtonScript1}
+			else
+				tab.ExtButton1 = {ButtonEnable = true, ButtonName = '📋', ButtonScript = ButtonScript1}
+			end
 		end
 		if m_simpleTV.User.paramScriptForSkin_buttonOk then
 			tab.OkButton = {ButtonImageCx = 30, ButtonImageCy= 30, ButtonImage = m_simpleTV.User.paramScriptForSkin_buttonOk}
@@ -3549,14 +3559,16 @@ https://github.com/grafi-tt/lunaJson
 			retAdr = retAdr .. '$OPT:POSITIONTOCONTINUE=0'
 		end
 		m_simpleTV.Control.CurrentAddress = retAdr
-		if m_simpleTV.Control.MainMode == 0 then
-			logo = m_simpleTV.User.paramScriptForSkin_logoYT
-					or logo
-					or 'https://i.ytimg.com/vi/' .. vId .. '/hqdefault.jpg'
-			m_simpleTV.Control.ChangeChannelLogo(logo
-												, m_simpleTV.Control.ChannelID
-												, 'CHANGE_IF_NOT_EQUAL')
-			m_simpleTV.Control.ChangeChannelName(header, m_simpleTV.Control.ChannelID, false)
+		if m_simpleTV.User.YT.isChPlst then
+			m_simpleTV.Control.SetNewAddressT({address = m_simpleTV.Control.CurrentAddress})
+		else
+			if m_simpleTV.Control.MainMode == 0 then
+				m_simpleTV.Control.ChangeChannelLogo(m_simpleTV.User.paramScriptForSkin_logoYT
+														or 'https://i.ytimg.com/vi/' .. vId .. '/hqdefault.jpg'
+														, m_simpleTV.Control.ChannelID
+														, 'CHANGE_IF_NOT_EQUAL')
+				m_simpleTV.Control.ChangeChannelName(header, m_simpleTV.Control.ChannelID, false)
+			end
 		end
 		if isInfoPanel == false then
 			title = Title_isInfoPanel_false(title, t[index].Name)
@@ -3567,7 +3579,7 @@ https://github.com/grafi-tt/lunaJson
 	if isPlst then
 		m_simpleTV.User.YT.isVideo = false
 		if not m_simpleTV.User.YT.isChPlst then
-			m_simpleTV.User.YT.ChTitleForSave = nil
+			m_simpleTV.User.YT.ChPlst.chTitle = nil
 		end
 		if inAdr:match('index=') then
 			local plstPicId
@@ -4101,7 +4113,7 @@ https://github.com/grafi-tt/lunaJson
 					t1[3].Address = 'https://www.youtube.com/embed?listType=playlist&list=RD'
 									.. m_simpleTV.User.YT.vId
 									.. '&isLogo=false'
-					m_simpleTV.User.YT.ChTitleForSave = nil
+					m_simpleTV.User.YT.ChPlst.chTitle = nil
 				end
 			end
 			t1.ExtParams = {FilterType = 2, LuaOnCancelFunName = 'OnMultiAddressCancel_YT'}
