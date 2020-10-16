@@ -2487,7 +2487,8 @@ https://github.com/grafi-tt/lunaJson
 							times = m_simpleTV.User.YT.Lng.live
 							tab[i].Name = string.format('%s (%s)', name, times)
 						end
-						count = c:match('iewCountText":{"simpleText":"([^"]+)')
+						count = c:match('"shortViewCountText":{"simpleText":"([^"]+)')
+								or c:match('iewCountText":{"simpleText":"([^"]+)')
 						publis = c:match('"publishedTimeText":{"simpleText":"([^"]+)')
 						if count and publis then
 							count = publis .. ' ◽ ' .. count
