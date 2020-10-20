@@ -1,4 +1,4 @@
--- видеоскрипт для сайта https://www.youtube.com (16/10/20)
+-- видеоскрипт для сайта https://www.youtube.com (20/10/20)
 --[[
 	Copyright © 2017-2020 Nexterr
 	Licensed under the Apache License, Version 2.0 (the "License");
@@ -1161,7 +1161,7 @@ https://github.com/grafi-tt/lunaJson
 		removeElement('YT_DIV_CR')
 	end
 	local function StopOnErr(e, t)
-			if urlAdr:match('&fromScr=true') then return end
+			if urlAdr:match('PARAMS=psevdotv') then return end
 		m_simpleTV.Control.CurrentAddress = m_simpleTV.User.YT.logoDisk .. '$OPT:video-filter=adjust$OPT:saturation=0$OPT:video-filter=gaussianblur$OPT:image-duration=5'
 		if session then
 			m_simpleTV.Http.Close(session)
@@ -1999,7 +1999,7 @@ https://github.com/grafi-tt/lunaJson
 				end
 		end
 			if #t == 0 then
-					if urlAdr:match('&fromScr=true') then return end
+					if urlAdr:match('PARAMS=psevdotv') then return end
 				local title_err, stream_tab_err
 				if tab.playabilityStatus then
 					if tab.playabilityStatus.status
@@ -4142,7 +4142,7 @@ https://github.com/grafi-tt/lunaJson
 				retAdr = retAdr .. '$OPT:POSITIONTOCONTINUE=0'
 			end
 		else
-			if urlAdr:match('&fromScr=true') then
+			if urlAdr:match('PARAMS=psevdotv') then
 				local t = m_simpleTV.Control.GetCurrentChannelInfo()
 				if t and t.MultiHeader then
 					title = t.MultiHeader .. ': ' .. title
