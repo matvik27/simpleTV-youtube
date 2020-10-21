@@ -20,10 +20,8 @@
 **Установка**
  - в папку _..\luaScr\user\video_
 ---------------------------------------------
-**Необходимо удалить** (если есть)
-- дополнение [_**videotracks**_](http://iptv.gen12.net/bugtracker/view.php?id=1704)
-- "[_**портал**_](http://iptv.gen12.net/bugtracker/view.php?id=1596)" _медиаресурсов_
+**Удалить несовместимые и неактуальные скрипты**
 
-для удаления, можно использовать скрипт [**remove-ilegal-scripts**](https://github.com/Nexterr/simpleTV/tree/master/addons/remove-ilegal-scripts)
+использовать [**remove-ilegal-scripts**](https://github.com/Nexterr/simpleTV/tree/master/addons/remove-ilegal-scripts)
 
 -------------
