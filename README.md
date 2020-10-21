@@ -14,13 +14,11 @@
 </table>
 </div>
 
-- кодировка UTF-8 without BOM
+###### кодировка UTF-8 without BOM
 ---------------------------------------------
 **Установка**
  - в папку _..\luaScr\user\video_
 ---------------------------------------------
 **Удалить несовместимые и неактуальные скрипты**
-
 - использовать [**remove-ilegal-scripts**](https://github.com/Nexterr/simpleTV/tree/master/addons/remove-ilegal-scripts)
-
 ---------------------------------------------
