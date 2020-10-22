@@ -5,7 +5,7 @@
 [![simpleTV IPTV player](https://img.shields.io/badge/simpleTV%20IPTV%20player-Scripts-red)](https://github.com/Nexterr/simpleTV)
 [![simpleTV IPTV player](https://img.shields.io/badge/simpleTV%20IPTV%20player-API-blue)](http://iptv.gen12.net/dokuwiki/doku.php?id=mantis:simpletv:api)
 [![simpleTV IPTV player](https://img.shields.io/badge/Lua-5.1-blue)](https://www.lua.org/manual/5.1/)
-[![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-maroon)](https://opensource.org/licenses/Apache-2.0)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-maroon)](https://opensource.org/licenses/Apache-2.0)
 <div class="table sectionedit1">
 <table class="inline" style="height: 107px;" width="586">
 <tbody>
