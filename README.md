@@ -1,11 +1,12 @@
-[![](https://img.shields.io/github/issues/Nexterr/simpleTV.youtube.svg)](https://github.com/Nexterr/simpleTV.youtube/issues)
-[![](https://img.shields.io/github/forks/Nexterr/simpleTV.youtube.svg)](https://github.com/Nexterr/simpleTV.youtube/network) 
-[![](https://img.shields.io/github/stars/Nexterr/simpleTV.youtube.svg)](https://github.com/Nexterr/simpleTV.youtube/stargazers) 
+[![Issues][badge-issues]][Issues]
+[![Forks][badge-forks]][Forks]
+[![Stars][badge-stars]][Stars]
 
-[![simpleTV IPTV player](https://img.shields.io/badge/simpleTV%20IPTV%20player-Scripts-red)](https://github.com/Nexterr/simpleTV)
-[![simpleTV IPTV player](https://img.shields.io/badge/simpleTV%20IPTV%20player-API-blue)](http://iptv.gen12.net/dokuwiki/doku.php?id=mantis:simpletv:api)
-[![simpleTV IPTV player](https://img.shields.io/badge/Lua-5.1-blue)](https://www.lua.org/manual/5.1/)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-maroon)](https://opensource.org/licenses/Apache-2.0)
+[![scripts][badge-scripts]][Scripts]
+[![simpleTV IPTV player API][badge-simpletvapi]][simpleTV API]
+[![Lua][badge-lua]][Lua]
+[![License][badge-license]][License]
+
 <div class="table sectionedit1">
 <table class="inline" style="height: 107px;" width="586">
 <tbody>
@@ -27,3 +28,19 @@
 **Удалить несовместимые и неактуальные скрипты**
 - использовать [**remove-ilegal-scripts**](https://github.com/Nexterr/simpleTV/tree/master/addons/remove-ilegal-scripts)
 ---------------------------------------------
+
+[Issues]: https://github.com/Nexterr/simpleTV.youtube/issues "Issues"
+[Forks]: https://github.com/Nexterr/simpleTV.youtube/network "Forks"
+[Stars]: https://github.com/Nexterr/simpleTV.youtube/stargazers "Stars"
+[Scripts]: https://github.com/Nexterr/simpleTV "Scripts"
+[simpleTV API]: http://iptv.gen12.net/dokuwiki/doku.php?id=mantis:simpletv:api "simpleTV API"
+[Lua]: https://www.lua.org/manual/5.1 "Lua 5.1"
+[License]: https://opensource.org/licenses/Apache-2.0 "License Apache 2.0"
+
+[badge-issues]: https://img.shields.io/github/issues/Nexterr/simpleTV.svg?style=flat-square "Open issues"
+[badge-forks]: https://img.shields.io/github/forks/Nexterr/simpleTV.svg?style=flat-square "Forks"
+[badge-stars]: https://img.shields.io/github/stars/Nexterr/simpleTV.svg?style=flat-square "Stars"
+[badge-scripts]: https://img.shields.io/badge/scripts-video%20%7C%20scrapers%7C%20addons-red?style=flat-square "video | scrapers| addons"
+[badge-simpletvapi]: https://img.shields.io/badge/simpleTV-Lua%20API-blue?style=flat-square "simpleTV Lua API"
+[badge-lua]: https://img.shields.io/badge/Lua-5.1-blue?style=flat-square "Lua 5.1"
+[badge-license]: https://img.shields.io/badge/License-Apache%202.0-maroon?style=flat-square "License Apache 2.0"
