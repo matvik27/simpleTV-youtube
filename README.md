@@ -40,7 +40,7 @@
 [badge-issues]: https://img.shields.io/github/issues/Nexterr/simpleTV.youtube.svg?style=flat-square "Open issues"
 [badge-forks]: https://img.shields.io/github/forks/Nexterr/simpleTV.youtube.svg?style=flat-square "Forks"
 [badge-stars]: https://img.shields.io/github/stars/Nexterr/simpleTV.youtube.svg?style=flat-square "Stars"
-[badge-scripts]: https://img.shields.io/badge/scripts-video%20%7C%20scrapers%20%7C%20addons-red?style=flat-square "video | scrapers| addons"
+[badge-scripts]: https://img.shields.io/badge/scripts-video%20%7C%20scrapers%20%7C%20addons-red?style=flat-square "video | scrapers | addons"
 [badge-simpletvapi]: https://img.shields.io/badge/simpleTV-Lua%20API-blue?style=flat-square "simpleTV Lua API"
 [badge-lua]: https://img.shields.io/badge/Lua-5.1-blue?style=flat-square "Lua 5.1"
 [badge-license]: https://img.shields.io/badge/License-Apache%202.0-maroon?style=flat-square "License Apache 2.0"
