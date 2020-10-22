@@ -1,6 +1,10 @@
 [![simpleTV IPTV player](https://img.shields.io/badge/simpleTV%20IPTV%20player-Scripts-red)](https://github.com/Nexterr/simpleTV)
 [![simpleTV IPTV player](https://img.shields.io/badge/simpleTV%20IPTV%20player-API-blue)](http://iptv.gen12.net/dokuwiki/doku.php?id=mantis:simpletv:api)
-[![simpleTV IPTV player](https://img.shields.io/badge/simpleTV%20IPTV%20player-Lua%205.1-blue)](https://www.lua.org/manual/5.1/)
+[![simpleTV IPTV player](https://img.shields.io/badge/Lua-5.1-blue)](https://www.lua.org/manual/5.1/)
+
+[![](https://img.shields.io/github/issues/Nexterr/simpleTV.youtube.svg)](https://github.com/Nexterr/simpleTV.youtube/issues)
+[![](https://img.shields.io/github/forks/Nexterr/simpleTV.youtube.svg)](https://github.com/Nexterr/simpleTV.youtube/network) 
+[![](https://img.shields.io/github/stars/Nexterr/simpleTV.youtube.svg)](https://github.com/Nexterr/simpleTV.youtube/stargazers) 
 <div class="table sectionedit1">
 <table class="inline" style="height: 107px;" width="586">
 <tbody>
