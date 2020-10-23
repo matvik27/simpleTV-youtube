@@ -35,7 +35,7 @@
 [Scripts]: https://github.com/Nexterr/simpleTV "Scripts"
 [simpleTV API]: http://iptv.gen12.net/dokuwiki/doku.php?id=mantis:simpletv:api "simpleTV API"
 [Lua]: https://www.lua.org/manual/5.1 "Lua 5.1"
-[License]: https://opensource.org/licenses/Apache-2.0 "License Apache 2.0"
+[License]: https://github.com/Nexterr/simpleTV.youtube/blob/master/LICENSE "License Apache 2.0"
 [remove]: https://github.com/Nexterr/simpleTV/tree/master/addons/remove-ilegal-scripts "remove ilegal scripts"
 
 [badge-issues]: https://img.shields.io/github/issues/Nexterr/simpleTV.youtube.svg?style=flat-square "Open issues"
